@@ -1,0 +1,128 @@
+@use "../../styles/mixins";
+@use "../../styles/variables" as v;
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  background-color: v.$shade_20;
+  height: 100%;
+  padding: 0.5rem v.$fluid_padding;
+
+  &__logo-wrap {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+  }
+
+  &__logo {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    display: flex;
+    align-items: flex-start;
+    font-size: clamp(1rem, 6vw, 1.25rem);
+  }
+
+  &__role {
+    letter-spacing: normal;
+    font-size: 0.75rem;
+    font-weight: 400;
+  }
+
+  &__button {
+    margin-left: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &-icon {
+      width: 36px;
+      height: 36px;
+      color: v.$shade_200;
+    }
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    border-radius: v.$border_radius;
+    overflow: hidden;
+
+    &--active {
+      background-color: v.$shade_200;
+
+      .sidebar__icon {
+        color: v.$shade_20;
+      }
+
+      .sidebar__drop-icon {
+        color: v.$shade_20;
+      }
+
+      .sidebar__text {
+        color: v.$shade_20;
+      }
+    }
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    color: inherit;
+
+    &--dropdown {
+      padding-left: 2rem;
+    }
+  }
+
+  &__dropdown-button {
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+  }
+
+  &__icon {
+    color: v.$shade_200;
+    margin-right: 1rem;
+    width: 24x;
+    height: 24px;
+    pointer-events: none;
+  }
+
+  &__text {
+    color: v.$shade_200;
+    pointer-events: none;
+  }
+
+  &__drop-icon {
+    color: inherit;
+    margin-left: auto;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+  }
+
+  &__dropdown-menu {
+    transition: margin 300ms ease;
+    margin-bottom: calc(((1.5rem + 1.5rem) * 2) * -1);
+    &--open {
+      margin-bottom: 0;
+    }
+    &--active {
+      background-color: v.$shade_160;
+    }
+  }
+
+  &__dropdown-item {
+    border-left: 5px solid transparent;
+    &--active {
+      border-left: 5px solid v.$shade_20;
+    }
+  }
+}

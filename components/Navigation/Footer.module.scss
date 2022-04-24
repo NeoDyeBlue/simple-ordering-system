@@ -1,0 +1,41 @@
+@use "../../styles/mixins";
+@use "../../styles/variables" as v;
+
+.c-footer {
+  display: flex;
+  flex-direction: column;
+  background-color: v.$shade_200;
+  padding: 1.5rem v.$fluid_padding;
+
+  &__logo {
+    font-family: v.$header_font;
+    color: v.$shade_20;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(1.25rem, 6vw, 2.25rem);
+  }
+
+  &__socials {
+    display: flex;
+    align-items: center;
+    margin: 2rem 0;
+
+    &-item {
+      &:first-child {
+        margin-right: 1rem;
+      }
+    }
+  }
+
+  &__copyright {
+    color: v.$shade_20;
+    font-size: 0.875rem;
+  }
+
+  @include mixins.tablet() {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

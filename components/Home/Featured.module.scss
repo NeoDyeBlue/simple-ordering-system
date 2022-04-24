@@ -1,0 +1,52 @@
+@use "../../styles/mixins";
+@use "../../styles/variables" as v;
+
+.c-featured-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  //   background-color: rgba($color: v.$complement_20, $alpha: 0.1);
+  background-color: v.$shade_20;
+  border-radius: v.$border_radius;
+  padding: 1rem;
+
+  &__image-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    min-height: 100px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 1rem;
+  }
+
+  &__image {
+    object-fit: contain;
+  }
+
+  &__text-wrapper {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  &__header {
+    margin-bottom: 1rem;
+    font-size: clamp(1rem, 5vw, 1.5rem);
+  }
+
+  &__subtext {
+    color: v.$shade_160;
+    margin-bottom: 1.5rem;
+  }
+
+  &__cta {
+    color: v.$complement_20;
+    font-weight: 700;
+  }
+}

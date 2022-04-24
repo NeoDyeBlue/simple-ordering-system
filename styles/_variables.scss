@@ -1,0 +1,36 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700&family=Lato:wght@100;300;400;700&display=swap");
+
+//fonts
+$header_font: "Raleway", sans-serif;
+$general_font: "Lato", sans-serif;
+
+//colors
+$shade_20: #ffff;
+$shade_40: #f8f9fa;
+$shade_60: #e9ecef;
+$shade_80: #dee2e6;
+$shade_100: #ced4da;
+$shade_120: #adb5bd;
+$shade_140: #6c757d;
+$shade_160: #495057;
+$shade_180: #343a40;
+$shade_200: #212529;
+
+$complement_20: #0082ff; // Main Primary color */
+$complement_40: #399cfc;
+$complement_60: #0f89ff;
+$complement_80: #005cb5;
+$complement_100: #00478a;
+//content
+$fluid_padding: clamp(10px, 5vw, 15px);
+$fluid_margin: clamp(10px, 5vw, 15px);
+$border_radius: 5px;
+$box_shadow_soft: 0 0px 1px rgba(0, 0, 0, 0.12), 0 0px 2px rgba(0, 0, 0, 0.12),
+  0 0px 4px rgba(0, 0, 0, 0.12), 0 0px 8px rgba(0, 0, 0, 0.12),
+  0 0px 16px rgba(0, 0, 0, 0.12);
+
+$drop_shadow_layer_1: 0 0px 1px rgba(0, 0, 0, 0.12);
+$drop_shadow_layer_2: 0 0px 2px rgba(0, 0, 0, 0.12);
+$drop_shadow_layer_3: 0 0px 4px rgba(0, 0, 0, 0.12);
+$drop_shadow_layer_4: 0 0px 8px rgba(0, 0, 0, 0.12);
+$drop_shadow_layer_5: 0 0px 16px rgba(0, 0, 0, 0.12);

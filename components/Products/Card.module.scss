@@ -1,0 +1,70 @@
+@use "../../styles/variables" as v;
+
+.c-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 200px;
+  padding: 1.5rem;
+  border-radius: v.$border_radius;
+  background-color: v.$shade_20;
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+
+  &__tag {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: v.$shade_200;
+    border-radius: 0 v.$border_radius v.$border_radius 0;
+    padding: 0.25rem 1.5rem;
+    margin-top: 1rem;
+    z-index: 1;
+  }
+
+  &__quantity {
+    color: v.$shade_20;
+    font-weight: 700;
+  }
+
+  &__image-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    min-height: 150px;
+    margin-bottom: 1rem;
+  }
+
+  &__image {
+    object-fit: contain;
+  }
+
+  &__product-name {
+    font-weight: 400;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  &__storages {
+    display: inline-flex;
+    margin-bottom: 1rem;
+  }
+
+  &__storage-pill {
+    background-color: v.$shade_180;
+    font-size: 0.875rem;
+    color: v.$shade_20;
+    padding: 0.3em 0.5em;
+    display: inline-block;
+    margin: 0.5rem 0.5rem 0 0;
+    border-radius: 1rem;
+  }
+
+  &__price {
+    font-weight: 700;
+  }
+}

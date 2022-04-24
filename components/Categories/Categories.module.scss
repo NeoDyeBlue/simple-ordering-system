@@ -1,0 +1,72 @@
+@use "../../styles/variables" as v;
+
+.c-category-list-wrapper {
+  position: fixed;
+  top: 60px;
+  width: 100%;
+  z-index: 99;
+  // margin-bottom: calc((2.5rem + 48px + 10px) * -1);
+}
+
+.c-category-list {
+  display: flex;
+  align-items: center;
+  padding: 0 v.$fluid_padding;
+  overflow-x: auto;
+  background-color: v.$shade_200;
+  width: 100%;
+  // position: sticky;
+  // top: 60px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.c-category {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  padding: 0.5rem;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-weight: 300;
+
+  &--active {
+    border-bottom: 5px solid v.$complement_20;
+    font-weight: 700;
+  }
+
+  :global(.c-category__image-icon-wrap) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    height: 48px;
+    width: 100%;
+    transform-origin: bottom center;
+  }
+
+  &__icon {
+    width: 48px;
+    height: 48px;
+    color: v.$shade_20;
+  }
+
+  &__image {
+    object-fit: contain;
+  }
+
+  &__name {
+    color: v.$shade_20;
+
+    &--active {
+      font-weight: 500;
+    }
+  }
+}

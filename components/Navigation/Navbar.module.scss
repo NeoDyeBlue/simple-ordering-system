@@ -1,0 +1,139 @@
+@use "../../styles/mixins";
+@use "../../styles/variables" as v;
+
+.c-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background-color: v.$shade_20;
+
+  &__wrap {
+    // display: grid;
+    align-items: center;
+    padding: 0.5rem v.$fluid_padding;
+    // grid-template-columns: 1fr 1fr 36px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    height: 60px;
+    // max-width: 1000px;
+    // margin: 0 auto;
+  }
+
+  &__logo {
+    font-family: v.$header_font;
+    color: v.$shade_200;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(1rem, 6vw, 1.25rem);
+    z-index: 0;
+    position: absolute;
+    margin-right: v.$fluid_margin;
+
+    @include mixins.tablet() {
+      position: relative;
+    }
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+
+    &--active {
+      border-radius: 9999px;
+      background-color: v.$shade_80;
+    }
+  }
+
+  &__icon {
+    width: 36px;
+    height: 36px;
+    transition: transform 200ms ease;
+
+    &--active {
+      transform: scale(0.65);
+    }
+
+    &--gray {
+      color: v.$shade_140;
+      width: 24px;
+      height: 24px;
+      margin-left: v.$fluid_margin;
+    }
+  }
+
+  &__searchbox-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-radius: 5px;
+    padding-right: 1rem;
+    margin-right: 5px;
+    width: 100%;
+    z-index: 1;
+
+    &--visible {
+      background-color: v.$shade_60;
+    }
+
+    @include mixins.tablet() {
+      max-width: 700px;
+      background-color: v.$shade_60;
+      flex-direction: row-reverse;
+    }
+  }
+
+  &__searchbox-input {
+    background-color: v.$shade_60;
+    width: 100%;
+    display: none;
+    border: none;
+
+    &--visible {
+      display: block;
+    }
+
+    &::placeholder {
+      color: v.$shade_140;
+      opacity: 1;
+    }
+
+    @include mixins.tablet() {
+      display: block;
+      max-width: 800px;
+    }
+  }
+
+  &__menu-wrap {
+    position: relative;
+  }
+
+  &__dropmenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    // margin: 0.5rem v.$fluid_margin;
+    margin-top: 1.5rem;
+  }
+
+  :global(.menu-anim-enter) {
+    opacity: 0;
+  }
+  :global(.menu-anim-enter-active) {
+    opacity: 1;
+    transition: opacity 200ms;
+  }
+  :global(.menu-anim-exit) {
+    opacity: 1;
+  }
+  :global(.menu-anim-exit-active) {
+    opacity: 0;
+    transition: opacity 200ms;
+  }
+}

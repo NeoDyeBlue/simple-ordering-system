@@ -1,0 +1,90 @@
+@use "../../styles/mixins";
+@use "../../styles/variables" as v;
+
+.navbar {
+  background-color: v.$shade_20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  padding: 0.5rem v.$fluid_padding;
+
+  &__header-wrap {
+    display: flex;
+    align-items: center;
+  }
+
+  &__button {
+    color: v.$shade_200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    margin-right: 0.5rem;
+
+    &-icon {
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  &__name {
+    font-size: clamp(1.25rem, 6vw, 1.5rem);
+  }
+
+  &__profile-wrap {
+    position: relative;
+  }
+
+  &__account-button {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background-color: transparent;
+  }
+
+  &__admin-name {
+    display: none;
+    margin-right: 0.5rem;
+
+    @include mixins.mobile() {
+      display: block;
+    }
+  }
+
+  &__admin-image-wrap {
+    position: relative;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: gray;
+  }
+
+  &__dropmenu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    // margin: 0.5rem v.$fluid_margin;
+    margin-top: 1.5rem;
+  }
+
+  :global(.menu-anim-enter) {
+    opacity: 0;
+  }
+  :global(.menu-anim-enter-active) {
+    opacity: 1;
+    transition: opacity 200ms;
+  }
+  :global(.menu-anim-exit) {
+    opacity: 1;
+  }
+  :global(.menu-anim-exit-active) {
+    opacity: 0;
+    transition: opacity 200ms;
+  }
+}

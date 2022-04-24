@@ -1,0 +1,113 @@
+@use "../../../styles/variables" as v;
+
+.drop-menu {
+  display: flex;
+  flex-direction: column;
+  background-color: v.$shade_20;
+  border-radius: v.$border_radius;
+  filter: drop-shadow(v.$drop_shadow_layer_1)
+    drop-shadow(v.$drop_shadow_layer_2) drop-shadow(v.$drop_shadow_layer_3)
+    drop-shadow(v.$drop_shadow_layer_4) drop-shadow(v.$drop_shadow_layer_5);
+  min-width: 250px;
+  // min-height: 250px;
+  justify-content: space-between;
+  position: relative;
+  transform-style: preserve-3d;
+
+  &--dark {
+    background-color: v.$shade_200;
+    min-width: 200px;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 16px;
+    background-color: inherit;
+    bottom: 100%;
+    right: 6px;
+    z-index: 0;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    transform: translateZ(-1);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1;
+    // border-radius: v.$border_radius v.$border_radius 0 0;
+    padding: 1rem 0;
+  }
+
+  &__item {
+    padding: 0.75rem;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      background-color: v.$shade_60;
+      cursor: pointer;
+    }
+
+    &--dark {
+      &:hover {
+        background-color: v.$shade_180;
+      }
+    }
+
+    &-text {
+      color: v.$shade_200;
+
+      &--dark {
+        color: v.$shade_20;
+      }
+    }
+  }
+
+  &__icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5rem;
+  }
+
+  &__icon {
+    color: v.$shade_200;
+    width: 24px;
+    height: 24px;
+
+    &--dark {
+      color: v.$shade_20;
+    }
+  }
+
+  &__account-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid v.$shade_120;
+    // background-color: v.$shade_160;
+    padding: 0.75rem;
+  }
+
+  &__button {
+    border-radius: v.$border_radius;
+    background-color: v.$complement_20;
+    font-weight: 700;
+    color: v.$shade_20;
+    padding: 0.75em 1em;
+    text-transform: capitalize;
+    cursor: pointer;
+
+    &:nth-child(2) {
+      margin-left: 1rem;
+    }
+
+    &--no-fill {
+      background-color: transparent;
+      color: v.$complement_20;
+    }
+  }
+}

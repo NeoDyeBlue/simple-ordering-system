@@ -57,7 +57,7 @@ export default function SignUp() {
             </div>
             <div className={styles["form__lnk-btn-wrap"]}>
               <p className={styles["form__link-text"]}>
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <Link href="/signup">
                   <a className={styles["form__link"]}>Sign Up Here</a>
                 </Link>

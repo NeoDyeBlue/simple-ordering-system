@@ -1,0 +1,60 @@
+@use "./mixins";
+@use "./variables" as v;
+
+.table {
+  background-color: v.$shade_20;
+  border-collapse: collapse;
+  min-height: 100%;
+
+  &__head {
+    background-color: v.$shade_160;
+  }
+
+  &__row {
+    border-color: v.$shade_80 !important;
+    background-color: v.$shade_20;
+    color: v.$shade_200;
+    // &:hover {
+    //   background-color: v.$complement_20;
+    //   color: v.$shade_20;
+    // }
+    &:first-child {
+      border-radius: v.$border_radius v.$border_radius 0 0;
+    }
+
+    &:last-child {
+      border-radius: 0 0 v.$border_radius v.$border_radius;
+    }
+  }
+
+  &__th {
+    padding: 0.75rem;
+    color: v.$shade_20;
+    text-align: left;
+    font-size: 0.875rem;
+  }
+
+  &__td {
+    padding: 0.75rem;
+    border-bottom: 1px solid v.$shade_80;
+    color: inherit;
+
+    &:last-child {
+      width: 200px;
+    }
+  }
+
+  &__button {
+    border-radius: v.$border_radius;
+    color: v.$shade_20;
+    font-weight: 700;
+    padding: 0.5em 0.75em;
+    margin: 0.25rem;
+    background-color: v.$complement_20;
+    cursor: pointer;
+
+    &--red {
+      background-color: v.$red_20;
+    }
+  }
+}

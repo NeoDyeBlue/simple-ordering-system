@@ -11,7 +11,7 @@ import { useState, useRef, useContext } from "react";
 export default function AdminNavbar() {
   const screenMatches = useMediaQuery("(min-width:1024px)");
   const menuRef = useRef(null);
-  const { setMenuIsOpen } = useContext(AdminContext);
+  const { setMenuIsOpen, activePage } = useContext(AdminContext);
   const [dropMenuIsOpen, setDropMenuIsOpen] = useState(false);
   useOnClickOutside(menuRef, () => setDropMenuIsOpen(false));
   return (
@@ -25,7 +25,7 @@ export default function AdminNavbar() {
             <MenuOutlinedIcon className={styles["navbar__button-icon"]} />
           </button>
         )}
-        <h1 className={styles["navbar__name"]}>Dashboard</h1>
+        <h1 className={styles["navbar__name"]}>{activePage}</h1>
       </div>
       <div ref={menuRef} className={styles["navbar__profile-wrap"]}>
         <button

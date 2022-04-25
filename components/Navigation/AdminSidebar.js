@@ -7,36 +7,44 @@ import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import FeaturedVideoOutlinedIcon from "@mui/icons-material/FeaturedVideoOutlined";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import ArrowDropUpOutlinedIcon from "@mui/icons-material/ArrowDropUpOutlined";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import { AdminContext } from "../../contexts/Admin.context";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import Link from "next/link";
 
 export default function AdminSidebar() {
-  const { setMenuIsOpen, activePage, setActivePage } = useContext(AdminContext);
+  const { setMenuIsOpen, activePage } = useContext(AdminContext);
+  const screenMatches = useMediaQuery("(min-width:1024px)");
   const [dropdown, setDropdown] = useState({
     open: false,
     active: false,
   });
+  useEffect(() => {
+    setDropdown({
+      open: activePage == "brands" || activePage == "models",
+      active: activePage == "brands" || activePage == "models",
+    });
+  }, [activePage]);
   function handleItemClick(event) {
     const { name } = event.target;
-    if (name != activePage || name != "phones") {
-      if (name == "phones") {
+    if (name != activePage || name != "phone") {
+      if (name == "phone") {
         setDropdown((prev) => ({
           active: true,
           open: !prev.open,
         }));
-      } else if (name == "categories" || name == "models") {
+      } else if (name == "brands" || name == "models") {
         setDropdown((prev) => ({
           ...prev,
           active: true,
         }));
-        setActivePage(name);
+        setMenuIsOpen(false);
       } else {
         setDropdown((prev) => ({
           ...prev,
           active: false,
         }));
-        setActivePage(name);
+        setMenuIsOpen(false);
       }
     }
   }
@@ -46,12 +54,14 @@ export default function AdminSidebar() {
         <h2 className={styles["sidebar__logo"]}>
           Emphoneum<span className={styles["sidebar__role"]}>admin</span>
         </h2>
-        <button
-          onClick={() => setMenuIsOpen(false)}
-          className={styles["sidebar__button"]}
-        >
-          <CloseOutlinedIcon className={styles["sidebar__button-icon"]} />
-        </button>
+        {!screenMatches && (
+          <button
+            onClick={() => setMenuIsOpen(false)}
+            className={styles["sidebar__button"]}
+          >
+            <CloseOutlinedIcon className={styles["sidebar__button-icon"]} />
+          </button>
+        )}
       </div>
       <ul className={styles["sidebar__list"]}>
         <li
@@ -79,7 +89,7 @@ export default function AdminSidebar() {
               : ""
           }`}
         >
-          <Link href={"/admin"}>
+          <Link href={"/admin/orders"}>
             <a
               className={styles["sidebar__link"]}
               onClick={handleItemClick}
@@ -100,10 +110,10 @@ export default function AdminSidebar() {
           <button
             onClick={handleItemClick}
             className={styles["sidebar__dropdown-button"]}
-            name="phones"
+            name="phone"
           >
             <SmartphoneOutlinedIcon className={styles["sidebar__icon"]} />
-            <p className={styles["sidebar__text"]}>Phones</p>
+            <p className={styles["sidebar__text"]}>Phone</p>
             {dropdown.open ? (
               <ArrowDropUpOutlinedIcon
                 className={styles["sidebar__drop-icon"]}
@@ -128,13 +138,13 @@ export default function AdminSidebar() {
                   : ""
               }`}
             >
-              <Link href={"/admin"}>
+              <Link href={"/admin/phone/categories"}>
                 <a
                   className={`${styles["sidebar__link"]} ${styles["sidebar__link--dropdown"]}`}
                   onClick={handleItemClick}
                   name="categories"
                 >
-                  <p className={styles["sidebar__text"]}>Categories</p>
+                  <p className={styles["sidebar__text"]}>Brands</p>
                 </a>
               </Link>
             </li>
@@ -145,7 +155,7 @@ export default function AdminSidebar() {
                   : ""
               }`}
             >
-              <Link href={"/admin"}>
+              <Link href={"/admin/phone/models"}>
                 <a
                   className={`${styles["sidebar__link"]} ${styles["sidebar__link--dropdown"]}`}
                   onClick={handleItemClick}
@@ -164,7 +174,7 @@ export default function AdminSidebar() {
               : ""
           }`}
         >
-          <Link href={"/admin"}>
+          <Link href={"/admin/featured"}>
             <a
               className={styles["sidebar__link"]}
               onClick={handleItemClick}
@@ -182,7 +192,7 @@ export default function AdminSidebar() {
               : ""
           }`}
         >
-          <Link href={"/admin"}>
+          <Link href={"/admin/users"}>
             <a
               className={styles["sidebar__link"]}
               onClick={handleItemClick}

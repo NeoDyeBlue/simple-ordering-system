@@ -7,14 +7,21 @@ import { useRef, useContext } from "react";
 import { AdminContext } from "../../contexts/Admin.context";
 
 export default function AdminNavLayout({ children }) {
+  const menuRef = useRef(null);
   const { menuIsOpen, setMenuIsOpen } = useContext(AdminContext);
   const screenMatches = useMediaQuery("(min-width:1024px)");
+  useOnClickOutside(menuRef, () => setMenuIsOpen(false));
   return (
     <div className={styles["admin"]}>
-      <div className={styles["admin__topbar"]}>
+      <div className={styles["admin__navbar"]}>
         <AdminNavbar />
       </div>
-      <div className={styles["admin__navbar"]}>
+      <div
+        ref={menuRef}
+        className={`${styles["admin__sidebar"]} ${
+          menuIsOpen ? styles["admin__sidebar--open"] : ""
+        }`}
+      >
         <AdminSidebar />
       </div>
       <div className={styles["admin__content"]}>{children}</div>

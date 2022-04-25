@@ -2,7 +2,7 @@
 @use "../../styles/variables" as v;
 
 .navbar {
-  background-color: v.$shade_20;
+  background-color: v.$shade_40;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -32,6 +32,7 @@
 
   &__name {
     font-size: clamp(1.25rem, 6vw, 1.5rem);
+    text-transform: capitalize;
   }
 
   &__profile-wrap {

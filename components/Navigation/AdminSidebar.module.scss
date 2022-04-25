@@ -2,16 +2,16 @@
 @use "../../styles/variables" as v;
 
 .sidebar {
-  position: fixed;
-  top: 0;
   background-color: v.$shade_20;
   height: 100%;
-  padding: 0.5rem v.$fluid_padding;
+  // padding: 0.5rem v.$fluid_padding;
 
   &__logo-wrap {
     display: flex;
     align-items: center;
     margin-bottom: 2rem;
+    height: 60px;
+    padding: 0.5rem v.$fluid_padding;
   }
 
   &__logo {
@@ -29,7 +29,7 @@
   }
 
   &__button {
-    margin-left: 1rem;
+    margin-left: 1.5rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -44,6 +44,7 @@
   &__list {
     display: flex;
     flex-direction: column;
+    padding: 0.5rem v.$fluid_padding;
   }
 
   &__item {
@@ -51,6 +52,10 @@
     flex-direction: column;
     border-radius: v.$border_radius;
     overflow: hidden;
+
+    &:not(&--active):hover {
+      background-color: v.$shade_80;
+    }
 
     &--active {
       background-color: v.$shade_200;
@@ -121,8 +126,11 @@
 
   &__dropdown-item {
     border-left: 5px solid transparent;
+    &:hover {
+      background-color: v.$shade_180;
+    }
     &--active {
-      border-left: 5px solid v.$shade_20;
+      border-left: 5px solid v.$complement_20;
     }
   }
 }

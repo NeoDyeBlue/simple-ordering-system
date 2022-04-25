@@ -2,29 +2,19 @@ import CategoryItem from "./CategoryItem";
 import styles from "./Categories.module.scss";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { ClientContext } from "../../contexts/Client.context";
+import { useEffect, useRef, useContext } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
-const categories = [
-  "Samsung",
-  "iPhone",
-  "Xiaomi",
-  "Oppo",
-  "Vivo",
-  "Motorola",
-  "Lenovo",
-  "LG",
-  "Nokia",
-];
-
 export default function CategoryList() {
+  const { phoneCategories } = useContext(ClientContext);
   const listRef = useRef();
   const elSelect = gsap.utils.selector(listRef);
   const timeline = useRef();
 
-  const categoryItems = categories.map((category, index) => (
+  const categoryItems = phoneCategories.map((category, index) => (
     <CategoryItem
       key={index}
       name={category}

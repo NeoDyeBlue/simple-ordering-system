@@ -1,22 +1,21 @@
 import AdminLayout from "../../components/Layouts/AdminLayout";
-import styles from "../../styles/Dashboard.module.scss";
 import Head from "next/head";
 import { AdminContext } from "../../contexts/Admin.context";
 import { useEffect, useContext } from "react";
 
-export default function Dashboard() {
+export default function Users() {
   const { setActivePage } = useContext(AdminContext);
-  useEffect(() => setActivePage("dashboard"), []);
+  useEffect(() => setActivePage("users"), []);
   return (
     <div>
       <Head>
-        <title>Dashboard | Emphoneum Admin</title>
+        <title>Users | Emphoneum Admin</title>
       </Head>
-      <h1>Dashboard</h1>
+      <h1>Users</h1>
     </div>
   );
 }
 
-Dashboard.getLayout = function getLayout(page) {
+Users.getLayout = function getLayout(page) {
   return <AdminLayout>{page}</AdminLayout>;
 };

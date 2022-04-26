@@ -133,16 +133,16 @@ export default function AdminSidebar() {
           >
             <li
               className={`${styles["sidebar__dropdown-item"]} ${
-                activePage == "categories"
+                activePage == "brands"
                   ? styles["sidebar__dropdown-item--active"]
                   : ""
               }`}
             >
-              <Link href={"/admin/phone/categories"}>
+              <Link href={"/admin/phone/brands"}>
                 <a
                   className={`${styles["sidebar__link"]} ${styles["sidebar__link--dropdown"]}`}
                   onClick={handleItemClick}
-                  name="categories"
+                  name="brands"
                 >
                   <p className={styles["sidebar__text"]}>Brands</p>
                 </a>

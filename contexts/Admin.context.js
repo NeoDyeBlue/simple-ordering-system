@@ -4,9 +4,15 @@ const actions = {
   SET_MENU_IS_OPEN: "SET_MENU_IS_OPEN",
   SET_ACTIVE_PAGE: "SET_ACTIVE_PAGE",
   SET_BRAND_MODAL_IS_OPEN: "SET_BRAND_MODAL_IS_OPEN",
+  SET_BRAND_DELETE_MODAL_IS_OPEN: "SET_BRAND_DELETE_MODAL_IS_OPEN",
   SET_BRAND_TO_EDIT: "SET_BRAND_TO_EDIT",
   SET_BRAND_TO_DELETE: "SET_BRAND_TO_DELETE",
   SET_BRAND_TABLE_DATA: "SET_BRAND_TABLE_DATA",
+  SET_MODEL_MODAL_IS_OPEN: "SET_MODEL_MODAL_IS_OPEN",
+  SET_MODEL_DELETE_MODAL_IS_OPEN: "SET_MODEL_DELETE_MODAL_IS_OPEN",
+  SET_MODEL_TO_EDIT: "SET_MODEL_TO_EDIT",
+  SET_MODEL_TO_DELETE: "SET_MODEL_TO_DELETE",
+  SET_MODEL_TABLE_DATA: "SET_MODEL_TABLE_DATA",
 };
 
 const reducer = (state, action) => {
@@ -26,6 +32,11 @@ const reducer = (state, action) => {
         ...state,
         brandModalIsOpen: action.isOpen,
       };
+    case actions.SET_BRAND_DELETE_MODAL_IS_OPEN:
+      return {
+        ...state,
+        brandDeleteModalIsOpen: action.isOpen,
+      };
     case actions.SET_BRAND_TO_EDIT:
       return {
         ...state,
@@ -39,11 +50,32 @@ const reducer = (state, action) => {
     case actions.SET_BRAND_TABLE_DATA:
       return {
         ...state,
-        brandTableData: [
-          ...state.brandTableData.map((data) =>
-            data._id !== action.newData._id ? data : action.newData
-          ),
-        ],
+        brandTableData: [...action.newData],
+      };
+    case actions.SET_MODEL_MODAL_IS_OPEN:
+      return {
+        ...state,
+        modelModalIsOpen: action.isOpen,
+      };
+    case actions.SET_MODEL_DELETE_MODAL_IS_OPEN:
+      return {
+        ...state,
+        modelDeleteModalIsOpen: action.isOpen,
+      };
+    case actions.SET_MODEL_TO_EDIT:
+      return {
+        ...state,
+        modelToEdit: action.toEdit,
+      };
+    case actions.SET_MODEL_TO_DELETE:
+      return {
+        ...state,
+        modelToDelete: action.toDelete,
+      };
+    case actions.SET_MODEL_TABLE_DATA:
+      return {
+        ...state,
+        modelTableData: [...action.newData],
       };
     default:
       return state;
@@ -57,18 +89,30 @@ export function AdminProvider({ children }) {
     menuIsOpen: false,
     activePage: "",
     brandModalIsOpen: false,
+    brandDeleteModalIsOpen: false,
     brandToEdit: null,
     brandToDelete: null,
     brandTableData: [],
+    modelModalIsOpen: false,
+    modelDeleteModalIsOpen: false,
+    modelToEdit: null,
+    modelToDelete: null,
+    modelTableData: [],
   });
 
   const value = {
     menuIsOpen: state.menuIsOpen,
     activePage: state.activePage,
     brandModalIsOpen: state.brandModalIsOpen,
+    brandDeleteModalIsOpen: state.brandDeleteModalIsOpen,
     brandToEdit: state.brandToEdit,
     brandToDelete: state.brandToDelete,
     brandTableData: state.brandTableData,
+    modelModalIsOpen: state.modelModalIsOpen,
+    modelDeleteModalIsOpen: state.modelDeleteModalIsOpen,
+    modelToEdit: state.modelToEdit,
+    modelToDelete: state.modelToDelete,
+    modelTableData: state.modelTableData,
     setActivePage: (pageName) => {
       dispatch({ type: actions.SET_ACTIVE_PAGE, pageName });
     },
@@ -78,6 +122,9 @@ export function AdminProvider({ children }) {
     setBrandModalIsOpen: (isOpen) => {
       dispatch({ type: actions.SET_BRAND_MODAL_IS_OPEN, isOpen });
     },
+    setBrandDeleteModalIsOpen: (isOpen) => {
+      dispatch({ type: actions.SET_BRAND_DELETE_MODAL_IS_OPEN, isOpen });
+    },
     setBrandToEdit: (toEdit) => {
       dispatch({ type: actions.SET_BRAND_TO_EDIT, toEdit });
     },
@@ -86,6 +133,21 @@ export function AdminProvider({ children }) {
     },
     setBrandTableData: (newData) => {
       dispatch({ type: actions.SET_BRAND_TABLE_DATA, newData });
+    },
+    setModelModalIsOpen: (isOpen) => {
+      dispatch({ type: actions.SET_MODEL_MODAL_IS_OPEN, isOpen });
+    },
+    setModelDeleteModalIsOpen: (isOpen) => {
+      dispatch({ type: actions.SET_MODEL_DELETE_MODAL_IS_OPEN, isOpen });
+    },
+    setModelToEdit: (toEdit) => {
+      dispatch({ type: actions.SET_MODEL_TO_EDIT, toEdit });
+    },
+    setModelToDelete: (toDelete) => {
+      dispatch({ type: actions.SET_MODEL_TO_DELETE, toDelete });
+    },
+    setModelTableData: (newData) => {
+      dispatch({ type: actions.SET_MODEL_TABLE_DATA, newData });
     },
   };
 

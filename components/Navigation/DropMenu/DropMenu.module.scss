@@ -12,7 +12,6 @@
   // min-height: 250px;
   justify-content: space-between;
   position: relative;
-  transform-style: preserve-3d;
 
   &--dark {
     background-color: v.$shade_200;
@@ -29,7 +28,6 @@
     right: 6px;
     z-index: 0;
     clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
-    transform: translateZ(-1);
   }
 
   &__list {

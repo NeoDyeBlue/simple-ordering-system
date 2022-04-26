@@ -40,18 +40,63 @@
     color: inherit;
 
     &:last-child {
-      width: 200px;
+      width: 150px;
     }
+  }
+
+  &__pills-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__info-pill {
+    background-color: v.$shade_60;
+    text-align: center;
+    padding: 0.25em;
+    width: 100%;
+    max-width: 100px;
+    color: v.$shade_200;
+    font-size: 0.875rem;
+    border-radius: v.$border_radius;
+  }
+
+  &__table-image-wrap {
+    display: flex;
+    position: relative;
+    width: 64px;
+    height: 64px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__image {
+    object-fit: contain;
+  }
+
+  &__buttons-wrap {
+    display: flex;
+    gap: 0.5rem;
   }
 
   &__button {
     border-radius: v.$border_radius;
     color: v.$shade_20;
-    font-weight: 700;
-    padding: 0.5em 0.75em;
-    margin: 0.25rem;
+    // padding: 0.5em 0.5em;
+    // margin: 0.25rem;
+    width: 36px;
+    height: 36px;
     background-color: v.$complement_20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+    flex-shrink: 0;
+
+    &-icon {
+      width: 24px;
+      height: 24px;
+    }
 
     &--red {
       background-color: v.$red_20;

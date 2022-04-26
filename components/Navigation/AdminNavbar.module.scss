@@ -2,12 +2,13 @@
 @use "../../styles/variables" as v;
 
 .navbar {
-  background-color: v.$shade_40;
+  background-color: v.$shade_20;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 60px;
   padding: 0.5rem v.$fluid_padding;
+  border-bottom: 1px solid v.$shade_80;
 
   &__header-wrap {
     display: flex;

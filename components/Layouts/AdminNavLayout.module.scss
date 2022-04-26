@@ -9,7 +9,14 @@
   min-height: 100%;
   overflow-y: auto;
   position: relative;
-  background-color: v.$shade_40;
+  background-color: v.$shade_20;
+
+  &__modals {
+    grid-column: 1 / -1;
+    grid-row: 1 / -1;
+    background-color: orange;
+    z-index: 100;
+  }
 
   &__navbar {
     position: sticky;
@@ -17,6 +24,7 @@
     width: 100%;
     grid-column: 1 / -1;
     grid-row: 1 / 2;
+    border-bottom: 1px solid v.$shade_80;
     z-index: 98;
 
     @include mixins.laptop() {
@@ -32,6 +40,7 @@
     max-height: 100vh;
     overflow-y: auto;
     transition: transform 300ms ease, box-shadow 300ms ease;
+    border-right: 1px solid v.$shade_80;
     transform: translateX(-100%);
     z-index: 99;
     min-width: 250px;

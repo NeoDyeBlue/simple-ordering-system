@@ -1,19 +1,20 @@
 import AdminLayout from "../../../components/Layouts/AdminLayout";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import Head from "next/head";
 import { AdminContext } from "../../../contexts/Admin.context";
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext } from "react";
 import styles from "../../../styles/admin/Brands.module.scss";
-import BrandModal from "../../../components/Modals/Admin/BrandModal";
 import Image from "next/image";
 
 export default function Brands() {
   const {
     setActivePage,
-    brandModalIsOpen,
     setBrandModalIsOpen,
+    setBrandDeleteModalIsOpen,
     setBrandToEdit,
     setBrandToDelete,
     setBrandTableData,
@@ -23,7 +24,7 @@ export default function Brands() {
   useEffect(() => {
     fetch("/api/admin/phones/brand")
       .then((res) => res.json())
-      .then((data) => setBrandTableData([data]));
+      .then((data) => setBrandTableData([...data.brands]));
   }, []);
 
   function handleAddBrandClick() {
@@ -34,32 +35,42 @@ export default function Brands() {
   function createTableRows() {
     if (brandTableData) {
       return brandTableData.map((data) => (
-        <Tr className={styles["table__row"]}>
+        <Tr className={styles["table__row"]} key={data._id}>
           <Td className={styles["table__td"]}>
-            <Image
-              className={styles["table__image"]}
-              src={data.image.url}
-              alt="Brand image"
-              layout="fixed"
-              width={64}
-              height={64}
-              priority={true}
-            />
+            <div className={styles["table__image-wrap"]}>
+              <Image
+                className={styles["table__image"]}
+                src={data.image.url}
+                alt="Brand image"
+                layout="fixed"
+                width={64}
+                height={64}
+                priority={true}
+              />
+            </div>
           </Td>
           <Td className={styles["table__td"]}>{data.name}</Td>
           <Td className={styles["table__td"]}>
-            <button
-              className={styles["table__button"]}
-              onClick={() => setBrandToEdit(data)}
-            >
-              Edit
-            </button>
-            <button
-              className={`${styles["table__button"]} ${styles["table__button--red"]}`}
-              onClick={() => setBrandToDelete(data)}
-            >
-              Delete
-            </button>
+            <div className={styles["table__buttons-wrap"]}>
+              <button
+                className={styles["table__button"]}
+                onClick={() => {
+                  setBrandToEdit(data);
+                  setBrandModalIsOpen(true);
+                }}
+              >
+                <EditOutlinedIcon className={styles["table__button-icon"]} />
+              </button>
+              <button
+                className={styles["table__button"]}
+                onClick={() => {
+                  setBrandToDelete(data);
+                  setBrandDeleteModalIsOpen(true);
+                }}
+              >
+                <DeleteOutlinedIcon className={styles["table__button-icon"]} />
+              </button>
+            </div>
           </Td>
         </Tr>
       ));
@@ -73,7 +84,6 @@ export default function Brands() {
       <Head>
         <title>Phone Brands | Emphoneum Admin</title>
       </Head>
-      {brandModalIsOpen && <BrandModal />}
       <button
         onClick={handleAddBrandClick}
         className={styles["brands__add-button"]}

@@ -11,13 +11,20 @@ import styles from "./AdminModal.module.scss";
 const initialNameErrorState = false;
 
 export default function BrandModal() {
-  const { brandToEdit, setBrandTableData, setBrandModalIsOpen } =
-    useContext(AdminContext);
+  const {
+    brandToEdit,
+    brandTableData,
+    setBrandTableData,
+    setBrandModalIsOpen,
+  } = useContext(AdminContext);
+  const modalRef = useRef(null);
   const [nameError, setNameError] = useState(initialNameErrorState);
   const [formData, setFormData] = useState({
     image: null,
     brandName: "",
   });
+
+  useOnClickOutside(modalRef, () => setBrandModalIsOpen(false));
 
   const [openFileSelector, { filesContent, errors }] = useFilePicker({
     readAs: "DataURL",
@@ -26,6 +33,15 @@ export default function BrandModal() {
     limitFilesConfig: { max: 1 },
     maxFileSize: 3,
   });
+
+  useEffect(() => {
+    if (brandToEdit) {
+      setFormData({
+        image: brandToEdit.image,
+        brandName: brandToEdit.name,
+      });
+    }
+  }, [brandToEdit]);
 
   useEffect(() => {
     if (filesContent.length) {
@@ -83,7 +99,17 @@ export default function BrandModal() {
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
-            setBrandTableData(data.brand);
+            setBrandTableData([
+              ...(!brandTableData.some((data) => {
+                if (data._id == data.brand._id) return true;
+              })
+                ? data.brand
+                : []),
+              ...brandTableData.filter((data) =>
+                data._id == data.brand._id ? data.brand : data
+              ),
+            ]);
+            setBrandModalIsOpen(false);
           } else {
             setNameError(data.exists);
           }
@@ -98,7 +124,8 @@ export default function BrandModal() {
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
-            setBrandTableData([data.brand]);
+            setBrandTableData([data.brand, ...brandTableData]);
+            setBrandModalIsOpen(false);
           } else {
             setNameError(data.exists);
           }
@@ -109,7 +136,7 @@ export default function BrandModal() {
 
   return (
     <div className={styles["modal"]}>
-      <div className={styles["modal__wrap"]}>
+      <div ref={modalRef} className={styles["modal__wrap"]}>
         <div className={styles["modal__header-wrap"]}>
           <h2 className={styles["modal__name"]}>
             {brandToEdit ? "edit brand" : "add brand"}
@@ -137,8 +164,7 @@ export default function BrandModal() {
                   width={120}
                   height={120}
                 />
-              ) : null}
-              {!brandToEdit && formData.image ? (
+              ) : !brandToEdit && formData.image ? (
                 <Image
                   className={styles["form__selected-img"]}
                   src={formData.image}
@@ -200,9 +226,10 @@ export default function BrandModal() {
                 type="submit"
                 disabled={
                   !(
-                    filesContent.length &&
-                    formData.brandName.length &&
-                    formData.brandName !== brandToEdit.name
+                    (formData.image &&
+                      formData.image.url !== brandToEdit.image.url) ||
+                    (formData.brandName.length &&
+                      formData.brandName !== brandToEdit.name)
                   )
                 }
                 className={styles["form__submit-button"]}

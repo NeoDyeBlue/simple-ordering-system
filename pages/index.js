@@ -6,20 +6,38 @@ import CategoriesLayout from "../components/Layouts/CategoriesLayout";
 import MainFeatured from "../components/Home/MainFeatured";
 import Featured from "../components/Home/Featured";
 import Card from "../components/Products/Card";
-import categories from "../lib/categories";
+import { getAllPhones } from "../lib/phone-queries";
+// import { getAllBrands } from "../lib/brand-queries";
 
-export async function getStaticPaths() {
-  const paths = [
-    "/",
-    ...categories.map((category) => `/phones/${category.name.toLowerCase()}`),
-  ];
+// export async function getStaticPaths() {
+//   const { brands } = await getAllBrands();
+//   const paths = [
+//     ...brands.map(
+//       (brand) => `/phones/${brand.name.split(" ").join("-").toLowerCase()}`
+//     ),
+//   ];
+//   return {
+//     paths,
+//     fallback: false,
+//   };
+// }
+
+export async function getStaticProps() {
+  const { phones } = await getAllPhones();
+
   return {
-    paths,
-    fallback: false,
+    props: { phones: JSON.parse(JSON.stringify(phones)) },
   };
 }
 
-export default function Home() {
+export default function Home({ phones }) {
+  const productCards = phones.map((phone) => (
+    <Card
+      name={phone.name}
+      image={phone.image.url}
+      variations={phone.variations}
+    />
+  ));
   return (
     <div className={styles["l-home"]}>
       <Head>
@@ -43,9 +61,7 @@ export default function Home() {
       <div className={styles["l-home__label"]}>
         <h2 className={styles["c-label"]}>Phones for You</h2>
       </div>
-      <div className={styles["l-home__products"]}>
-        <Card />
-      </div>
+      <div className={styles["l-home__products"]}>{productCards}</div>
     </div>
   );
 }

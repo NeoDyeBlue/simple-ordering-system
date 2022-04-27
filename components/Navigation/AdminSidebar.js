@@ -138,7 +138,7 @@ export default function AdminSidebar() {
                   : ""
               }`}
             >
-              <Link href={"/admin/phone/brands"}>
+              <Link href={"/admin/brands"}>
                 <a
                   className={`${styles["sidebar__link"]} ${styles["sidebar__link--dropdown"]}`}
                   onClick={handleItemClick}
@@ -155,7 +155,7 @@ export default function AdminSidebar() {
                   : ""
               }`}
             >
-              <Link href={"/admin/phone/models"}>
+              <Link href={"/admin/models"}>
                 <a
                   className={`${styles["sidebar__link"]} ${styles["sidebar__link--dropdown"]}`}
                   onClick={handleItemClick}

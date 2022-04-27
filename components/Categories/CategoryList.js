@@ -14,12 +14,8 @@ export default function CategoryList() {
   const elSelect = gsap.utils.selector(listRef);
   const timeline = useRef();
 
-  const categoryItems = phoneCategories.map((category, index) => (
-    <CategoryItem
-      key={index}
-      name={category}
-      image={`/sample_images/${category.toLowerCase()}.png`}
-    />
+  const categoryItems = phoneCategories.map((brand) => (
+    <CategoryItem key={brand._id} name={brand.name} image={brand.image.url} />
   ));
 
   useEffect(() => {
@@ -51,19 +47,15 @@ export default function CategoryList() {
     return () => {
       timeline.current.kill();
     };
-  }, []);
+  }, [phoneCategories]);
 
-  function handleScroll(event) {
-    event.preventDefault();
-    listRef.current.scrollLeft += event.deltaY;
-  }
+  // function handleScroll(event) {
+  //   event.preventDefault();
+  //   listRef.current.scrollLeft += event.deltaY;
+  // }
 
   return (
-    <div
-      ref={listRef}
-      className={styles["c-category-list-wrapper"]}
-      onWheel={handleScroll}
-    >
+    <div ref={listRef} className={styles["c-category-list-wrapper"]}>
       <ul className={styles["c-category-list"]}>
         <li
           className={`${styles["c-category"]} ${styles["c-category--active"]}`}

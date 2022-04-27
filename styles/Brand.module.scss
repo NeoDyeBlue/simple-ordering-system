@@ -1,0 +1,48 @@
+@use "./mixins";
+@use "./variables" as v;
+
+.brand {
+  margin-top: calc(2.5rem + 48px + 10px);
+  background-color: v.$shade_60;
+  display: flex;
+  flex-direction: column;
+  gap: v.$fluid_margin;
+  min-height: 100vh;
+
+  &__name-wrap {
+    text-align: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: v.$fluid_margin v.$fluid_margin 0 v.$fluid_margin;
+    padding: v.$fluid_padding;
+
+    &::before {
+      content: "";
+      position: absolute;
+      height: 50%;
+      width: 100%;
+      top: 0;
+      left: 0;
+      background-color: transparent;
+      border-bottom: 1px solid v.$shade_120;
+      z-index: 0;
+    }
+  }
+
+  &__name {
+    font-size: clamp(2rem, 6vw, 3rem);
+    background-color: v.$shade_60;
+    padding: 0 v.$fluid_padding;
+    z-index: 1;
+  }
+
+  &__products {
+    padding: 0 v.$fluid_padding;
+    margin-bottom: v.$fluid_margin;
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}

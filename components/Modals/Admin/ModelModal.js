@@ -11,39 +11,39 @@ import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
 import styles from "./AdminModal.module.scss";
 
 const initialNameErrorState = false;
+const initialFormData = {
+  image: null,
+  modelName: "",
+  brand: "",
+  variations: [{ rom: "", ram: "", price: "", quantity: "" }],
+  colors: [{ colorName: "", hexValue: "" }],
+  os: "",
+  screenSizeInches: "",
+  screenResolution: "",
+  batteryCapacity: "",
+  batteryType: "",
+  cameraMain: "",
+  cameraResolution: "",
+  chipset: "",
+  cpu: "",
+  gpu: "",
+  usb: "",
+  cardSlot: "",
+  sensors: "",
+  network: "",
+};
 
 export default function ModelModal() {
   const {
     modelToEdit,
     modelTableData,
-    brandTableData,
     setModelTableData,
     setModelModalIsOpen,
   } = useContext(AdminContext);
   const modalRef = useRef(null);
   const [brandNames, setBrandNames] = useState([]);
   const [nameError, setNameError] = useState(initialNameErrorState);
-  const [formData, setFormData] = useState({
-    image: null,
-    modelName: "",
-    brand: "",
-    variations: [{ rom: "", ram: "", price: "", quantity: "" }],
-    colors: [{ colorName: "", hexValue: "" }],
-    os: "",
-    screenSizeInches: "",
-    screenResolution: "",
-    batteryCapacity: "",
-    batteryType: "",
-    cameraMain: "",
-    cameraResolution: "",
-    chipset: "",
-    cpu: "",
-    gpu: "",
-    usb: "",
-    cardSlot: "",
-    sensors: "",
-    network: "",
-  });
+  const [formData, setFormData] = useState(initialFormData);
 
   function handleInputVariationChange(event, index) {
     const { value, name } = event.target;
@@ -228,7 +228,6 @@ export default function ModelModal() {
     fetch("/api/admin/phones/brand")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setBrandNames(data.brands);
       })
       .catch((err) => console.log(err));
@@ -258,6 +257,10 @@ export default function ModelModal() {
         network: modelToEdit.specs.network,
       });
     }
+
+    return () => {
+      setFormData(initialFormData);
+    };
   }, [modelToEdit]);
 
   useEffect(() => {
@@ -284,12 +287,8 @@ export default function ModelModal() {
     }));
   }
 
-  const brandOptions = brandNames.map((brand) => (
-    <option
-      className={styles["form__option"]}
-      key={brand._id}
-      value={brand._id}
-    >
+  const brandOptions = brandNames.map((brand, index) => (
+    <option className={styles["form__option"]} key={index} value={brand._id}>
       {brand.name}
     </option>
   ));
@@ -306,7 +305,7 @@ export default function ModelModal() {
             return false;
           }
         }
-        if (key == "brandName") {
+        if (key == "modelName") {
           if (value == modelToEdit.name) {
             return false;
           }
@@ -316,23 +315,24 @@ export default function ModelModal() {
       });
 
       const filteredBody = Object.fromEntries(filtered);
-
-      fetch(`/api/admin/phones/model/${modelToEdit._id}`, {
+      console.log(modelToEdit._id);
+      fetch(`/api/admin/models/${modelToEdit._id}`, {
         method: "POST",
         body: JSON.stringify(filteredBody),
         headers: { "Content-Type": "application/json" },
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log(data.phone._id);
           if (data.success) {
             setModelTableData([
-              ...(!modelTableData.some((data) => {
-                if (data._id == data.brand._id) return true;
+              ...(!modelTableData.some((item) => {
+                if (item._id == data.phone._id) return true;
               })
-                ? data.brand
+                ? data.phone
                 : []),
-              ...modelTableData.filter((data) =>
-                data._id == data.brand._id ? data.brand : data
+              ...modelTableData.map((item) =>
+                item._id == data.phone._id ? data.phone : item
               ),
             ]);
             setModelModalIsOpen(false);
@@ -342,17 +342,15 @@ export default function ModelModal() {
         })
         .catch((err) => console.log(err));
     } else {
-      fetch(`/api/admin/phones/model`, {
+      fetch(`/api/admin/models`, {
         method: "POST",
         body: JSON.stringify(formData),
         headers: { "Content-Type": "application/json" },
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
           if (data.success) {
-            //   setModelTableData([data.model, ...modelTableData]);
-            console.log(data.phone);
+            setModelTableData([...modelTableData, data.phone]);
             setModelModalIsOpen(false);
           } else {
             setNameError(data.exists);
@@ -711,16 +709,7 @@ export default function ModelModal() {
           </div>
           <div className={styles["form__buttons-wrap"]}>
             {modelToEdit ? (
-              <button
-                type="submit"
-                disabled={
-                  !(
-                    formData.image &&
-                    formData.image.url !== modelToEdit.image.url
-                  )
-                }
-                className={styles["form__submit-button"]}
-              >
+              <button type="submit" className={styles["form__submit-button"]}>
                 Save Changes
               </button>
             ) : (

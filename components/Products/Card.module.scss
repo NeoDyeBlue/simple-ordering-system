@@ -10,7 +10,12 @@
   background-color: v.$shade_20;
   position: relative;
   width: 100%;
+  transition: box-shadow 300ms ease;
   cursor: pointer;
+
+  &:hover {
+    box-shadow: v.$box_shadow_soft;
+  }
 
   &__tag {
     position: absolute;
@@ -49,14 +54,14 @@
     margin-bottom: 1rem;
   }
 
-  &__storages {
-    display: inline-flex;
-    margin-bottom: 1rem;
+  &__badges-wrap {
+    display: inline-block;
+    margin-bottom: 2rem;
   }
 
-  &__storage-pill {
+  &__memory {
     background-color: v.$shade_180;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     color: v.$shade_20;
     padding: 0.3em 0.5em;
     display: inline-block;

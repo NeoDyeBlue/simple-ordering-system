@@ -3,7 +3,7 @@
 
 .l-home {
   margin-top: calc(2.5rem + 48px + 10px);
-  background-color: v.$shade_60;
+  background-color: v.$shade_40;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: v.$fluid_margin;
@@ -18,7 +18,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    // margin: v.$fluid_margin;
+    margin: v.$fluid_margin;
 
     &::before {
       content: "";
@@ -38,6 +38,7 @@
     grid-column: 1 / -1;
     margin-bottom: v.$fluid_margin;
     display: grid;
+    gap: v.$fluid_margin;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }
 }
@@ -46,7 +47,8 @@
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: v.$fluid_margin;
-  padding: v.$fluid_padding;
+  margin-top: v.$fluid_margin;
+  padding: 0 v.$fluid_padding;
 
   &__main {
     grid-column: 1 / -1;
@@ -82,7 +84,7 @@
 }
 
 .c-label {
-  background-color: v.$shade_60;
+  background-color: v.$shade_40;
   padding: 0 v.$fluid_padding;
   z-index: 1;
   font-size: clamp(1.25rem, 5vw, 2rem);

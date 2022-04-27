@@ -1,11 +1,11 @@
-import { getAllPhones, addPhone } from "../../../../../lib/phone-queries";
+import { getAllBrands, addBrand } from "../../../../lib/brand-queries";
 
 export default async function handler(req, res) {
   let result = null;
   if (req.method == "GET") {
-    result = await getAllPhones();
+    result = await getAllBrands();
   } else if (req.method == "POST") {
-    result = await addPhone(req.body);
+    result = await addBrand(req.body);
   } else {
     return res.status(405).json({ message: "method not allowed" });
   }

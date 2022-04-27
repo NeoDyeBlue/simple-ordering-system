@@ -1,13 +1,13 @@
-import AdminLayout from "../../../components/Layouts/AdminLayout";
+import AdminLayout from "../../components/Layouts/AdminLayout";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import Head from "next/head";
-import { AdminContext } from "../../../contexts/Admin.context";
+import { AdminContext } from "../../contexts/Admin.context";
 import { useEffect, useContext } from "react";
-import styles from "../../../styles/admin/Brands.module.scss";
+import styles from "../../styles/admin/Brands.module.scss";
 import Image from "next/image";
 
 export default function Brands() {
@@ -22,7 +22,7 @@ export default function Brands() {
   } = useContext(AdminContext);
   useEffect(() => setActivePage("brands"), []);
   useEffect(() => {
-    fetch("/api/admin/phones/brand")
+    fetch("/api/admin/brands")
       .then((res) => res.json())
       .then((data) => setBrandTableData([...data.brands]));
   }, []);

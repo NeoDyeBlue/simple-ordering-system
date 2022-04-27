@@ -4,29 +4,29 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { AdminContext } from "../../../contexts/Admin.context";
 import styles from "./AdminModal.module.scss";
 
-export default function BrandDeleteModal() {
+export default function ModelDeleteModal() {
   const {
-    brandToDelete,
-    brandTableData,
-    setBrandTableData,
-    setBrandDeleteModalIsOpen,
+    modelToDelete,
+    modelTableData,
+    setModelTableData,
+    setModelDeleteModalIsOpen,
   } = useContext(AdminContext);
   const modalRef = useRef(null);
 
-  useOnClickOutside(modalRef, () => setBrandDeleteModalIsOpen(false));
+  useOnClickOutside(modalRef, () => setModelDeleteModalIsOpen(false));
   function deleteHandler() {
-    fetch(`/api/admin/brands/${brandToDelete._id}`, {
+    fetch(`/api/admin/models/${modelToDelete._id}`, {
       method: "DELETE",
-      body: JSON.stringify(brandToDelete.image),
+      body: JSON.stringify(modelToDelete.image),
       headers: { "Content-Type": "application/json" },
     })
       .then((res) => res.json())
       .then((data) => {
         if (data.deleted) {
-          setBrandTableData(
-            brandTableData.filter((data) => data._id != brandToDelete._id)
+          setModelTableData(
+            modelTableData.filter((data) => data._id != modelToDelete._id)
           );
-          setBrandDeleteModalIsOpen(false);
+          setModelDeleteModalIsOpen(false);
         }
       })
       .catch((err) => console.log(err));
@@ -36,23 +36,21 @@ export default function BrandDeleteModal() {
     <div className={styles["modal"]}>
       <div ref={modalRef} className={styles["modal__wrap"]}>
         <div className={styles["modal__header-wrap"]}>
-          <h2 className={styles["modal__name"]}>
-            Delete {brandToDelete.name}?
-          </h2>
+          <h2 className={styles["modal__name"]}>Delete model?</h2>
           <button
-            onClick={() => setBrandDeleteModalIsOpen(false)}
+            onClick={() => setModelDeleteModalIsOpen(false)}
             className={styles["modal__close-button"]}
           >
             <CloseOutlinedIcon className={styles["modal__close-button-icon"]} />
           </button>
         </div>
         <p className={styles["modal__description"]}>
-          Deleting this brand will also remove all the models associated with
-          it!
+          {modelToDelete.name} will be removed from the database and will not be
+          retrieved!
         </p>
         <div className={styles["modal__buttons-wrap"]}>
           <button
-            onClick={() => setBrandDeleteModalIsOpen(false)}
+            onClick={() => setModelDeleteModalIsOpen(false)}
             className={`${styles["modal__button"]} ${styles["modal__button--text"]} `}
           >
             Cancel

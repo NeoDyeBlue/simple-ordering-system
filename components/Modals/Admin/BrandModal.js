@@ -91,7 +91,7 @@ export default function BrandModal() {
 
       const filteredBody = Object.fromEntries(filtered);
 
-      fetch(`/api/admin/phones/brand/${brandToEdit._id}`, {
+      fetch(`/api/admin/brands/${brandToEdit._id}`, {
         method: "POST",
         body: JSON.stringify(filteredBody),
         headers: { "Content-Type": "application/json" },
@@ -100,13 +100,13 @@ export default function BrandModal() {
         .then((data) => {
           if (data.success) {
             setBrandTableData([
-              ...(!brandTableData.some((data) => {
-                if (data._id == data.brand._id) return true;
+              ...(!brandTableData.some((item) => {
+                if (item._id == data.brand._id) return true;
               })
                 ? data.brand
                 : []),
-              ...brandTableData.filter((data) =>
-                data._id == data.brand._id ? data.brand : data
+              ...brandTableData.map((item) =>
+                item._id == data.brand._id ? data.brand : item
               ),
             ]);
             setBrandModalIsOpen(false);
@@ -116,7 +116,7 @@ export default function BrandModal() {
         })
         .catch((err) => console.log(err));
     } else {
-      fetch(`/api/admin/phones/brand`, {
+      fetch(`/api/admin/brands`, {
         method: "POST",
         body: JSON.stringify(formData),
         headers: { "Content-Type": "application/json" },

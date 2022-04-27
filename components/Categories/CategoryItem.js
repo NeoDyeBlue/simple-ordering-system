@@ -10,7 +10,6 @@ export default function CategoryItem(props) {
           src={props.image}
           alt="category pic"
           layout="fill"
-          priority={true}
         />
       </div>
       <p className={styles["c-category__name"]}>{props.name}</p>

@@ -1,13 +1,13 @@
-import AdminLayout from "../../../components/Layouts/AdminLayout";
+import AdminLayout from "../../components/Layouts/AdminLayout";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import Head from "next/head";
-import { AdminContext } from "../../../contexts/Admin.context";
+import { AdminContext } from "../../contexts/Admin.context";
 import { useEffect, useContext, useState } from "react";
-import styles from "../../../styles/admin/Models.module.scss";
+import styles from "../../styles/admin/Models.module.scss";
 import Image from "next/image";
 
 export default function Models() {
@@ -22,7 +22,7 @@ export default function Models() {
   } = useContext(AdminContext);
   useEffect(() => setActivePage("models"), []);
   useEffect(() => {
-    fetch("/api/admin/phones/model")
+    fetch("/api/admin/models")
       .then((res) => res.json())
       .then((data) => setModelTableData([...data.phones]));
   }, []);
@@ -53,8 +53,10 @@ export default function Models() {
           <Td className={styles["table__td"]}>{data.brand.name}</Td>
           <Td className={styles["table__td"]}>
             <div className={styles["table__pills-wrap"]}>
-              {data.variations.map((storage) => (
-                <p className={styles["table__info-pill"]}>{storage.rom}GB</p>
+              {data.variations.map((storage, index) => (
+                <p key={index} className={styles["table__info-pill"]}>
+                  {storage.rom}GB
+                </p>
               ))}
             </div>
           </Td>
@@ -140,7 +142,7 @@ export default function Models() {
               <Th className={styles["table__th"]}>Actions</Th>
             </Tr>
           </Thead>
-          <Tbody className={styles["table__body"]}>{tableRows}</Tbody>
+          <Tbody className={styles["table__body"]}>{tableRows.reverse()}</Tbody>
         </Table>
       </div>
     </div>

@@ -7,26 +7,16 @@ import MainFeatured from "../components/Home/MainFeatured";
 import Featured from "../components/Home/Featured";
 import Card from "../components/Products/Card";
 import { getAllPhones } from "../lib/phone-queries";
-// import { getAllBrands } from "../lib/brand-queries";
-
-// export async function getStaticPaths() {
-//   const { brands } = await getAllBrands();
-//   const paths = [
-//     ...brands.map(
-//       (brand) => `/phones/${brand.name.split(" ").join("-").toLowerCase()}`
-//     ),
-//   ];
-//   return {
-//     paths,
-//     fallback: false,
-//   };
-// }
+import useSWR from "swr";
 
 export async function getStaticProps() {
-  const { phones } = await getAllPhones();
+  const { phones } = await getAllPhones(all);
 
   return {
-    props: { phones: JSON.parse(JSON.stringify(phones)) },
+    props: {
+      fallback: { "/api/phones/all": JSON.parse(JSON.stringify(phones)) },
+      phones: JSON.parse(JSON.stringify(phones)),
+    },
   };
 }
 

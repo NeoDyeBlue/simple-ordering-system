@@ -7,6 +7,7 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { useFilePicker } from "use-file-picker";
 import { AdminContext } from "../../../contexts/Admin.context";
 import styles from "./AdminModal.module.scss";
+import useSWR from "swr";
 
 const initialNameErrorState = false;
 

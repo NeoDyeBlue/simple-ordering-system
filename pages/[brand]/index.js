@@ -4,7 +4,7 @@ import ClientLayout from "../../components/Layouts/ClientLayout";
 import CategoriesLayout from "../../components/Layouts/CategoriesLayout";
 import Card from "../../components/Products/Card";
 import { getAllBrands } from "../../lib/brand-queries";
-import { getAllPhonesByBrand } from "../../lib/phone-queries";
+import { getAllPhones } from "../../lib/phone-queries";
 
 export async function getStaticPaths() {
   const { brands } = await getAllBrands();
@@ -19,7 +19,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
   const brandName = context.params.brand.split("-").join(" ");
-  const data = await getAllPhonesByBrand(brandName);
+  const data = await getAllPhones(brandName);
 
   return {
     props: { data: JSON.parse(JSON.stringify(data)) },

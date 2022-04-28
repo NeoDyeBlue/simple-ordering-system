@@ -3,7 +3,7 @@
 
 .brand {
   margin-top: calc(2.5rem + 48px + 10px);
-  background-color: v.$shade_60;
+  background-color: v.$shade_40;
   display: flex;
   flex-direction: column;
   gap: v.$fluid_margin;
@@ -33,7 +33,7 @@
 
   &__name {
     font-size: clamp(2rem, 6vw, 3rem);
-    background-color: v.$shade_60;
+    background-color: v.$shade_40;
     padding: 0 v.$fluid_padding;
     z-index: 1;
   }

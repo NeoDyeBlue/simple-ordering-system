@@ -9,6 +9,13 @@ import { AdminContext } from "../../contexts/Admin.context";
 import { useEffect, useContext } from "react";
 import styles from "../../styles/admin/Brands.module.scss";
 import Image from "next/image";
+import useSWR from "swr";
+
+const fetcher = async () => {
+  const response = await fetch("/api/admin/brands");
+  const data = await response.json();
+  return data;
+};
 
 export default function Brands() {
   const {
@@ -20,6 +27,7 @@ export default function Brands() {
     setBrandTableData,
     brandTableData,
   } = useContext(AdminContext);
+  const { data, error } = useSWR("brands", fetcher);
   useEffect(() => setActivePage("brands"), []);
   useEffect(() => {
     fetch("/api/admin/brands")
@@ -33,8 +41,8 @@ export default function Brands() {
   }
 
   function createTableRows() {
-    if (brandTableData) {
-      return brandTableData.map((data) => (
+    if (data) {
+      return data.brands.map((data) => (
         <Tr className={styles["table__row"]} key={data._id}>
           <Td className={styles["table__td"]}>
             <div className={styles["table__image-wrap"]}>

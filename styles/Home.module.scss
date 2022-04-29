@@ -1,5 +1,6 @@
 @use "./mixins";
 @use "./variables" as v;
+@use "./skeleton-loader";
 
 .l-home {
   margin-top: calc(2.5rem + 48px + 10px);
@@ -7,6 +8,7 @@
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   gap: v.$fluid_margin;
+  min-height: 100vh;
 
   &__featured {
     grid-column: 1 / -1;

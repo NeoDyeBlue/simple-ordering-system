@@ -1,4 +1,14 @@
 @use "../../styles/variables" as v;
+@use "../../styles/animations";
+
+// @keyframes fade-in {
+//   from {
+//     opacity: 0;
+//   }
+//   to {
+//     opacity: 1;
+//   }
+// }
 
 .c-card {
   display: flex;
@@ -11,6 +21,7 @@
   position: relative;
   width: 100%;
   transition: box-shadow 300ms ease;
+  animation: fade-in 300ms ease;
   cursor: pointer;
 
   &:hover {

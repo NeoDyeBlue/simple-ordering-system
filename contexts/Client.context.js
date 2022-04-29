@@ -1,4 +1,6 @@
 import { createContext, useReducer, useEffect } from "react";
+import { SWRConfig } from "swr";
+
 const actions = {
   SET_PHONE_CATEGORIES: "SET_PHONE_CATEGORIES",
   SET_ACTIVE_PAGE: "SET_ACTIVE_PAGE",
@@ -30,16 +32,25 @@ export function ClientProvider({ children }) {
   });
 
   useEffect(() => {
-    fetch("/api/brands")
-      .then((res) => res.json())
-      .then((data) =>
-        dispatch({
-          type: actions.SET_PHONE_CATEGORIES,
-          categories: data.brands,
-        })
-      )
-      .catch((err) => console.log(err));
+    const dateMS = new Date().getTime();
+    sessionStorage.setItem("sessionDate", dateMS);
+
+    return () => {
+      sessionStorage.clear();
+    };
   }, []);
+
+  // useEffect(() => {
+  //   fetch("/api/brands")
+  //     .then((res) => res.json())
+  //     .then((data) =>
+  //       dispatch({
+  //         type: actions.SET_PHONE_CATEGORIES,
+  //         categories: data.brands,
+  //       })
+  //     )
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   const value = {
     activePage: state.activePage,
@@ -53,6 +64,17 @@ export function ClientProvider({ children }) {
   };
 
   return (
-    <ClientContext.Provider value={value}>{children}</ClientContext.Provider>
+    <ClientContext.Provider value={value}>
+      <SWRConfig
+        value={{
+          // refreshInterval: 3000,
+          revalidateOnFocus: false,
+          fetcher: (resource, init) =>
+            fetch(resource, init).then((res) => res.json()),
+        }}
+      >
+        {children}
+      </SWRConfig>
+    </ClientContext.Provider>
   );
 }

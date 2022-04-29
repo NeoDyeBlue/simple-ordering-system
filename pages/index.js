@@ -6,28 +6,40 @@ import CategoriesLayout from "../components/Layouts/CategoriesLayout";
 import MainFeatured from "../components/Home/MainFeatured";
 import Featured from "../components/Home/Featured";
 import Card from "../components/Products/Card";
-import { getAllPhones } from "../lib/phone-queries";
+// import { getAllPhones } from "../lib/phone-queries";
 import useSWR from "swr";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
-export async function getStaticProps() {
-  const { phones } = await getAllPhones(all);
+// export async function getServerSideProps() {
+//   const { phones } = await getAllPhones("brand_all", "offset_0,limit_5");
 
-  return {
-    props: {
-      fallback: { "/api/phones/all": JSON.parse(JSON.stringify(phones)) },
-      phones: JSON.parse(JSON.stringify(phones)),
-    },
-  };
-}
+//   return {
+//     props: {
+//       phones: {
+//         "/api/phones?query=brand_all&offset_0,limit_5": JSON.parse(
+//           JSON.stringify(phones)
+//         ),
+//       },
+//       phones: JSON.parse(JSON.stringify(phones)),
+//     },
+//   };
+// }
 
-export default function Home({ phones }) {
-  const productCards = phones.map((phone) => (
+export default function Home() {
+  const { data, error } = useSWR(
+    "/api/phones?query=brand_all&options=offset_0,limit_8"
+  );
+
+  const productCards = data?.phones.map((phone) => (
     <Card
+      key={phone._id}
       name={phone.name}
       image={phone.image.url}
       variations={phone.variations}
     />
   ));
+
   return (
     <div className={styles["l-home"]}>
       <Head>
@@ -51,7 +63,15 @@ export default function Home({ phones }) {
       <div className={styles["l-home__label"]}>
         <h2 className={styles["c-label"]}>Phones for You</h2>
       </div>
-      <div className={styles["l-home__products"]}>{productCards}</div>
+      <div className={styles["l-home__products"]}>
+        {productCards || (
+          <Skeleton
+            containerClassName={styles["l-home__products"]}
+            className={styles["skeleton-card"]}
+            count={6}
+          />
+        )}
+      </div>
     </div>
   );
 }

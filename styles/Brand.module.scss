@@ -6,6 +6,7 @@
   background-color: v.$shade_40;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   gap: v.$fluid_margin;
   min-height: 100vh;
 
@@ -35,6 +36,7 @@
     font-size: clamp(2rem, 6vw, 3rem);
     background-color: v.$shade_40;
     padding: 0 v.$fluid_padding;
+    text-transform: capitalize;
     z-index: 1;
   }
 
@@ -42,7 +44,7 @@
     padding: 0 v.$fluid_padding;
     margin-bottom: v.$fluid_margin;
     display: grid;
-    width: 100%;
+    gap: v.$fluid_margin;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   }
 }

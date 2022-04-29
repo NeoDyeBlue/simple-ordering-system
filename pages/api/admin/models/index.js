@@ -3,7 +3,7 @@ import { getAllPhones, addPhone } from "../../../../lib/phone-queries";
 export default async function handler(req, res) {
   let result = null;
   if (req.method == "GET") {
-    result = await getAllPhones("all");
+    result = await getAllPhones();
   } else if (req.method == "POST") {
     result = await addPhone(req.body);
   } else {

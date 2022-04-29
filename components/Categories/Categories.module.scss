@@ -1,4 +1,5 @@
 @use "../../styles/variables" as v;
+@use "../../styles/skeleton-loader";
 
 .c-category-list-wrapper {
   position: fixed;
@@ -24,21 +25,23 @@
 }
 
 .c-category {
-  flex-direction: column;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100px;
-  padding: 0.5rem;
-  border-top: 5px solid transparent;
-  border-bottom: 5px solid transparent;
-  cursor: pointer;
-  flex-shrink: 0;
-  font-weight: 300;
+  &__link {
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    padding: 0.5rem;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    cursor: pointer;
+    flex-shrink: 0;
+    font-weight: 300;
 
-  &--active {
-    border-bottom: 5px solid v.$complement_20;
-    font-weight: 700;
+    &--active {
+      border-bottom: 5px solid v.$complement_20;
+      font-weight: 700;
+    }
   }
 
   :global(.c-category__image-icon-wrap) {

@@ -2,32 +2,52 @@ import CategoryItem from "./CategoryItem";
 import styles from "./Categories.module.scss";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { ClientContext } from "../../contexts/Client.context";
-import { useEffect, useRef, useContext } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
+import useSWR from "swr";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function CategoryList() {
-  const { phoneCategories } = useContext(ClientContext);
+  // const { phoneCategories } = useContext(ClientContext);
   const listRef = useRef();
   const elSelect = gsap.utils.selector(listRef);
   const timeline = useRef();
+  const [windowDimensions, setWindowDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
+  const { data, error } = useSWR("/api/brands");
 
-  const categoryItems = phoneCategories.map((brand) => (
-    <CategoryItem key={brand._id} name={brand.name} image={brand.image.url} />
-  ));
+  const router = useRouter();
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions((prev) => ({
+        ...prev,
+        width: window.innerWidth,
+        height: window.innerHeight,
+      }));
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const listEl = listRef.current;
     timeline.current = gsap
       .timeline({
         scrollTrigger: {
-          trigger: listEl,
-          start: "top 60px",
+          trigger: "#__next",
+          start: "60px 60px",
           // markers: true, //for testing the trigger
-          // endTrigger: ".js-footer",
-          // end: "+=1000 bottom",
+          // endTrigger: listEl,
+          end: `${60 + listEl.clientHeight}px 60px`,
           // scroller: "#__next",
           // toggleActions: "play none none reverse",
           scrub: true,
@@ -47,12 +67,11 @@ export default function CategoryList() {
     return () => {
       timeline.current.kill();
     };
-  }, [phoneCategories]);
+  }, [data?.brands, windowDimensions]);
 
-  // function handleScroll(event) {
-  //   event.preventDefault();
-  //   listRef.current.scrollLeft += event.deltaY;
-  // }
+  const categoryItems = data?.brands.map((brand) => (
+    <CategoryItem key={brand._id} name={brand.name} image={brand.image.url} />
+  ));
 
   return (
     <div ref={listRef} className={styles["c-category-list-wrapper"]}>
@@ -60,12 +79,21 @@ export default function CategoryList() {
         <li
           className={`${styles["c-category"]} ${styles["c-category--active"]}`}
         >
-          <div className="c-category__image-icon-wrap">
-            <HomeOutlinedIcon className={styles["c-category__icon"]} />
-          </div>
-          <p className={styles["c-category__name"]}>Home</p>
+          <Link scroll={false} href="/">
+            <a
+              className={`${styles["c-category__link"]} ${
+                router.pathname == "/" ? styles["c-category__link--active"] : ""
+              }`}
+            >
+              <div className="c-category__image-icon-wrap">
+                <HomeOutlinedIcon className={styles["c-category__icon"]} />
+              </div>
+              <p className={styles["c-category__name"]}>Home</p>
+            </a>
+          </Link>
         </li>
-        {categoryItems}
+        {/* <Skeleton containerClassName={styles["c-category"]} /> */}
+        {categoryItems || <Skeleton count={5} />}
       </ul>
     </div>
   );

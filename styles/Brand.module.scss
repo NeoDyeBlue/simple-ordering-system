@@ -1,5 +1,6 @@
 @use "./mixins";
 @use "./variables" as v;
+@use "./skeleton-loader";
 
 .brand {
   margin-top: calc(2.5rem + 48px + 10px);
@@ -33,7 +34,7 @@
   }
 
   &__name {
-    font-size: clamp(2rem, 6vw, 3rem);
+    font-size: clamp(1.25rem, 5vw, 2.5rem);
     background-color: v.$shade_40;
     padding: 0 v.$fluid_padding;
     text-transform: capitalize;
@@ -42,6 +43,7 @@
 
   &__products {
     padding: 0 v.$fluid_padding;
+    grid-column: 1 / -1;
     margin-bottom: v.$fluid_margin;
     display: grid;
     gap: v.$fluid_margin;

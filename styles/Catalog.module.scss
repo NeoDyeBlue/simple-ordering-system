@@ -2,25 +2,30 @@
 @use "./variables" as v;
 @use "./skeleton-loader";
 
-.home {
+.catalog {
   margin-top: calc(2.5rem + 48px + 10px);
   background-color: v.$shade_40;
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
   gap: v.$fluid_margin;
   min-height: 100vh;
 
   &__featured {
-    grid-column: 1 / -1;
+    width: 100%;
   }
 
   &__label-wrap {
-    grid-column: 1 / -1;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: v.$fluid_margin;
+    padding: v.$fluid_padding;
+    width: 100%;
+
+    &--margin-top {
+      margin-top: v.$fluid_margin;
+    }
 
     &::before {
       content: "";
@@ -44,7 +49,7 @@
 
   &__products {
     padding: 0 v.$fluid_padding;
-    grid-column: 1 / -1;
+    width: 100%;
     display: grid;
     gap: v.$fluid_margin;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -56,7 +61,7 @@
     align-items: center;
     padding: v.$fluid_padding;
     margin-bottom: v.$fluid_margin;
-    grid-column: 1 / -1;
+    width: 100%;
   }
 
   &__more-button {

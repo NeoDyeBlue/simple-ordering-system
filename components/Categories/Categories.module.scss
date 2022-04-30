@@ -37,6 +37,7 @@
     cursor: pointer;
     flex-shrink: 0;
     font-weight: 300;
+    transition: border 300ms ease;
 
     &--active {
       border-bottom: 5px solid v.$complement_20;

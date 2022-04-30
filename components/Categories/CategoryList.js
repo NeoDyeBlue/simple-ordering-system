@@ -40,14 +40,17 @@ export default function CategoryList() {
 
   useEffect(() => {
     const listEl = listRef.current;
+    ScrollTrigger.config({
+      autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
+    });
     timeline.current = gsap
       .timeline({
         scrollTrigger: {
           trigger: "#__next",
-          start: "60px 60px",
+          start: "61px 61px",
           // markers: true, //for testing the trigger
           // endTrigger: listEl,
-          end: `${60 + listEl.clientHeight}px 60px`,
+          end: `${60 + listEl.clientHeight}px 59px`,
           // scroller: "#__next",
           // toggleActions: "play none none reverse",
           scrub: true,
@@ -67,7 +70,7 @@ export default function CategoryList() {
     return () => {
       timeline.current.kill();
     };
-  }, [data?.brands, windowDimensions]);
+  }, [data?.brands]);
 
   const categoryItems = data?.brands.map((brand) => (
     <CategoryItem key={brand._id} name={brand.name} image={brand.image.url} />

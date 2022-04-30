@@ -31,6 +31,8 @@ export function ClientProvider({ children }) {
     phoneCategories: [],
   });
 
+  const testTime = 1651116900000;
+
   useEffect(() => {
     const dateMS = new Date().getTime();
     sessionStorage.setItem("sessionDate", dateMS);

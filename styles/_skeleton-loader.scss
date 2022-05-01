@@ -19,4 +19,35 @@
     //     border;
     // }
   }
+
+  &-category {
+    margin: 0.5rem;
+    border-radius: v.$border_radius;
+  }
+
+  &-radio-rect {
+    border-radius: v.$border_radius;
+    // max-width: 200px;
+    // height: 3em;
+  }
+
+  &-radio-circ {
+    max-width: 48px;
+    max-height: 48px;
+  }
+
+  &-model {
+    &-name {
+      border-radius: v.$border_radius;
+      height: 100%;
+    }
+
+    &-image {
+      width: 100%;
+      height: 100%;
+      border-radius: v.$border_radius;
+      flex-shrink: 0;
+      width: 100px;
+    }
+  }
 }

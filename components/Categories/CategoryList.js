@@ -79,24 +79,37 @@ export default function CategoryList() {
   return (
     <div ref={listRef} className={styles["c-category-list-wrapper"]}>
       <ul className={styles["c-category-list"]}>
-        <li
-          className={`${styles["c-category"]} ${styles["c-category--active"]}`}
-        >
-          <Link scroll={false} href="/">
-            <a
-              className={`${styles["c-category__link"]} ${
-                router.pathname == "/" ? styles["c-category__link--active"] : ""
-              }`}
-            >
-              <div className="c-category__image-icon-wrap">
-                <HomeOutlinedIcon className={styles["c-category__icon"]} />
-              </div>
-              <p className={styles["c-category__name"]}>Home</p>
-            </a>
-          </Link>
-        </li>
-        {/* <Skeleton containerClassName={styles["c-category"]} /> */}
-        {categoryItems || <Skeleton count={5} />}
+        {categoryItems && (
+          <li
+            className={`${styles["c-category"]} ${styles["c-category--active"]}`}
+          >
+            <Link href="/">
+              <a
+                className={`${styles["c-category__link"]} ${
+                  router.pathname == "/"
+                    ? styles["c-category__link--active"]
+                    : ""
+                }`}
+              >
+                <div className="c-category__image-icon-wrap">
+                  <HomeOutlinedIcon className={styles["c-category__icon"]} />
+                </div>
+                <p className={styles["c-category__name"]}>Home</p>
+              </a>
+            </Link>
+          </li>
+        )}
+        {categoryItems ||
+          [...Array(4)].map((_, i) => (
+            <Skeleton
+              key={i}
+              width={82}
+              height={82}
+              baseColor="#343a40"
+              highlightColor="#495057"
+              className={styles["skeleton-category"]}
+            />
+          ))}
       </ul>
     </div>
   );

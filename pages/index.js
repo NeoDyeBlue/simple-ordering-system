@@ -9,42 +9,37 @@ import Card from "../components/Products/Card";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import usePhonesPaginate from "../utils/usePhonesPaginate";
+// import nookies from "nookies";
+// export async function getServerSideProps(ctx) {
+//   // Parse
+//   const cookies = nookies.get(ctx);
 
-// export async function getServerSideProps() {
-//   const { phones } = await getAllPhones("brand_all", "offset_0,limit_5");
+//   // Set
+//   // nookies.set(ctx, 'fromGetInitialProps', 'value', {
+//   //   maxAge: 30 * 24 * 60 * 60,
+//   //   path: '/',
+//   // })
 
-//   return {
-//     props: {
-//       phones: {
-//         "/api/phones?query=brand_all&offset_0,limit_5": JSON.parse(
-//           JSON.stringify(phones)
-//         ),
-//       },
-//       phones: JSON.parse(JSON.stringify(phones)),
-//     },
-//   };
+//   console.log(cookies);
+
+//   // Destroy
+//   // nookies.destroy(ctx, 'cookieName')
+
+//   return { propscookies };
 // }
-
-// function fetchData(offset, limit) {
-//   if (typeof window !== "undefined") {
-//     const { data, error } = useSWR(
-//       `/api/phones?query=brand_all,createdAt_$lte~${sessionStorage.getItem(
-//         "sessionDate"
-//       )}&options=offset_${offset},limit_${limit}`
-//     );
-//     return { data, error };
-//   }
-// }
-
 export default function Home() {
   const { phonesData, endReached, isLoading, size, setSize, error, mutate } =
-    usePhonesPaginate("/api/phones?query=brand_all", 8);
+    usePhonesPaginate("/api/phones", 8);
 
   const productCards = phonesData?.phones.map((phone) => (
     <Card
       key={phone._id}
       name={phone.name}
       image={phone.image.url}
+      link={`/${phone.brand.name
+        .split(" ")
+        .join("-")
+        .toLowerCase()}/${phone.name.split(" ").join("-").toLowerCase()}`}
       variations={phone.variations}
     />
   ));

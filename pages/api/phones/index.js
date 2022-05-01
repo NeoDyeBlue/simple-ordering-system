@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   if (req.method !== "GET") {
     return res.status(405).json({ message: "method is not allowed" });
   }
-  response = await getAllPhones(query, options);
+  response = await getAllPhones("all", query, options);
 
   res.status(200).json(response);
 }

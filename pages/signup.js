@@ -1,19 +1,29 @@
 import ClientLayout from "../components/Layouts/ClientLayout";
+import ErrorOutlinedIcon from "@mui/icons-material/ErrorOutlined";
 import styles from "../styles/Form.module.scss";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Head from "next/head";
 import { useState } from "react";
+
+const initialInputErrors = {
+  emailInUse: false,
+  phoneInUse: false,
+  passwordsNotMatch: false,
+};
 
 export default function SignUp() {
   const [inputValues, setInputValues] = useState({
     firstname: "",
     lastname: "",
     email: "",
-    phone: "",
+    phoneNumber: "",
     address: "",
     password: "",
     confirmPassword: "",
   });
+  const router = useRouter();
+  const [inputErrors, setInputErrors] = useState(initialInputErrors);
 
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -23,6 +33,49 @@ export default function SignUp() {
     }));
   }
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    setInputErrors({ ...initialInputErrors });
+
+    if (inputValues.password == inputValues.confirmPassword) {
+      const { confirmPassword, ...formBody } = inputValues;
+      console.log(formBody);
+      fetch("/api/auth/signup", {
+        body: JSON.stringify(inputValues),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            console.log(data);
+            router.push("/");
+          } else {
+            if (data.existing.email) {
+              setInputErrors((prev) => ({
+                ...prev,
+                emailInUse: true,
+              }));
+            }
+            if (data.existing.phoneNumber) {
+              setInputErrors((prev) => ({
+                ...prev,
+                phoneInUse: true,
+              }));
+            }
+          }
+        })
+        .catch((err) => console.log(err));
+    } else {
+      setInputErrors({
+        ...initialInputErrors,
+        passwordsNotMatch: !(
+          inputValues.password == inputValues.confirmPassword
+        ),
+      });
+    }
+  }
+
   return (
     <>
       <Head>
@@ -30,7 +83,7 @@ export default function SignUp() {
       </Head>
       <div className={styles["form-container"]}>
         <div className={styles["form-container__wrap"]}>
-          <form className={styles["form"]}>
+          <form className={styles["form"]} onSubmit={handleSubmit}>
             <h2 className={styles["form__name"]}>Sign Up</h2>
             <div className={styles["form__field-wrap"]}>
               <div className={styles["form__input-wrap"]}>
@@ -75,6 +128,18 @@ export default function SignUp() {
                 value={inputValues.email}
                 onChange={handleInputChange}
               />
+              {inputErrors.emailInUse && (
+                <div className={styles["form__input-error-wrap"]}>
+                  <p className={`${styles["form__error"]}`}>
+                    <span className={styles["form__error-icon-wrap"]}>
+                      <ErrorOutlinedIcon
+                        className={styles["form__error-icon"]}
+                      />
+                    </span>
+                    Email already in use
+                  </p>
+                </div>
+              )}
             </div>
             <div className={styles["form__input-wrap"]}>
               <label className={styles["form__label"]} htmlFor="address">
@@ -91,18 +156,31 @@ export default function SignUp() {
               ></textarea>
             </div>
             <div className={styles["form__input-wrap"]}>
-              <label className={styles["form__label"]} htmlFor="phone">
+              <label className={styles["form__label"]} htmlFor="phoneNumber">
                 Phone Number
               </label>
               <input
                 className={styles["form__input"]}
-                name="phone"
-                type="number"
+                name="phoneNumber"
+                type="tel"
+                pattern="[0-9]{11}"
                 placeholder="09123456789"
                 required
                 value={inputValues.phone}
                 onChange={handleInputChange}
               />
+              {inputErrors.phoneInUse && (
+                <div className={styles["form__input-error-wrap"]}>
+                  <p className={`${styles["form__error"]}`}>
+                    <span className={styles["form__error-icon-wrap"]}>
+                      <ErrorOutlinedIcon
+                        className={styles["form__error-icon"]}
+                      />
+                    </span>
+                    Phone number already in use
+                  </p>
+                </div>
+              )}
             </div>
             <div className={styles["form__input-wrap"]}>
               <label className={styles["form__label"]} htmlFor="password">
@@ -117,6 +195,18 @@ export default function SignUp() {
                 value={inputValues.password}
                 onChange={handleInputChange}
               />
+              {inputErrors.passwordsNotMatch && (
+                <div className={styles["form__input-error-wrap"]}>
+                  <p className={`${styles["form__error"]}`}>
+                    <span className={styles["form__error-icon-wrap"]}>
+                      <ErrorOutlinedIcon
+                        className={styles["form__error-icon"]}
+                      />
+                    </span>
+                    Passwords do not match
+                  </p>
+                </div>
+              )}
             </div>
             <div className={styles["form__input-wrap"]}>
               <label
@@ -127,7 +217,7 @@ export default function SignUp() {
               </label>
               <input
                 className={styles["form__input"]}
-                name="password"
+                name="confirmPassword"
                 type="password"
                 placeholder="Confirm Password"
                 required

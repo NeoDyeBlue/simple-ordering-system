@@ -7,10 +7,7 @@ export default function CategoryItem(props) {
   const router = useRouter();
   return (
     <li className={styles["c-category"]} onClick={props.onclick}>
-      <Link
-        scroll={false}
-        href={`/${props.name.split(" ").join("-").toLowerCase()}`}
-      >
+      <Link href={`/${props.name.split(" ").join("-").toLowerCase()}`}>
         <a
           className={`${styles["c-category__link"]} ${
             router.query.brand?.split("-").join(" ").toLowerCase() ==

@@ -4,6 +4,10 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { useState, useEffect, useRef, useContext } from "react";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { ClientContext } from "../../contexts/Client.context";
+import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { CSSTransition } from "react-transition-group";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Link from "next/link";
@@ -73,17 +77,56 @@ export default function Navbar() {
           )}
         </div>
         <div ref={menuRef} className={styles["c-navbar__menu-wrap"]}>
+          {matches && (
+            <ul className={styles["c-navbar__menu-list"]}>
+              <li className={styles["c-navbar__menu-list-item"]}>
+                <Link href="/">
+                  <a className={styles["c-navbar__menu-link"]}>
+                    <FavoriteOutlinedIcon
+                      className={styles["c-navbar__menu-link-icon"]}
+                    />
+                  </a>
+                </Link>
+              </li>
+              <li className={styles["c-navbar__menu-list-item"]}>
+                <Link href="/">
+                  <a className={styles["c-navbar__menu-link"]}>
+                    <ShoppingCartOutlinedIcon
+                      className={styles["c-navbar__menu-link-icon"]}
+                    />
+                  </a>
+                </Link>
+              </li>
+              <li className={styles["c-navbar__menu-list-item"]}>
+                <Link href="/">
+                  <a className={styles["c-navbar__menu-link"]}>
+                    <ShoppingBagOutlinedIcon
+                      className={styles["c-navbar__menu-link-icon"]}
+                    />
+                  </a>
+                </Link>
+              </li>
+            </ul>
+          )}
           <button
             className={`${styles["c-navbar__button"]} ${
               dropMenuIsOpen ? styles["c-navbar__button--active"] : ""
             }`}
             onClick={() => setDropMenuIsOpen(!dropMenuIsOpen)}
           >
-            <MenuOutlinedIcon
-              className={`${styles["c-navbar__icon"]} ${
-                dropMenuIsOpen ? styles["c-navbar__icon--active"] : ""
-              }`}
-            />
+            {matches ? (
+              <AccountCircleOutlinedIcon
+                className={`${styles["c-navbar__icon"]} ${
+                  dropMenuIsOpen ? styles["c-navbar__icon--active"] : ""
+                }`}
+              />
+            ) : (
+              <MenuOutlinedIcon
+                className={`${styles["c-navbar__icon"]} ${
+                  dropMenuIsOpen ? styles["c-navbar__icon--active"] : ""
+                }`}
+              />
+            )}
           </button>
           <CSSTransition
             in={dropMenuIsOpen}

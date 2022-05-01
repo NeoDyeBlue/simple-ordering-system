@@ -16,7 +16,8 @@ body,
   // height: 100%;
   min-height: 100vh;
   position: relative;
-  background-color: v.$shade_60;
+  background-color: v.$shade_20;
+  scroll-behavior: smooth;
 }
 
 // #__next {

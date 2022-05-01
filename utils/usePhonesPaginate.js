@@ -5,7 +5,7 @@ export default function usePhonesPaginate(url, limit, options) {
     if (typeof window !== "undefined") {
       pageIndex += 1;
       if (previousPageData && !previousPageData.phones.length) return null;
-      return `${url},createdAt_$lte~${sessionStorage.getItem(
+      return `${url}?query=createdAt_$lte~${sessionStorage.getItem(
         "sessionDate"
       )}&options=page_${pageIndex},limit_${limit}`;
     }

@@ -21,7 +21,7 @@ export async function getServerSideProps(context) {
     return { notFound: true };
   }
 
-  const data = await getAllPhones(`brand_${params.brand}`, "page_1,limit_8");
+  const data = await getAllPhones(params.brand, "", "page_1,limit_8");
   return {
     props: {
       data: JSON.parse(JSON.stringify(data)),
@@ -33,7 +33,7 @@ export default function Brand({ data }) {
   const router = useRouter();
   const { brand } = router.query;
   const { phonesData, endReached, isLoading, size, setSize, error, mutate } =
-    usePhonesPaginate(`/api/phones?query=brand_${brand}`, 8, {
+    usePhonesPaginate(`/api/phones/${brand}`, 8, {
       initialData: data.phones.length ? data : null,
     });
 
@@ -42,6 +42,10 @@ export default function Brand({ data }) {
       key={phone._id}
       name={phone.name}
       image={phone.image.url}
+      link={`/${phone.brand.name
+        .split(" ")
+        .join("-")
+        .toLowerCase()}/${phone.name.split(" ").join("-").toLowerCase()}`}
       variations={phone.variations}
     />
   ));

@@ -78,6 +78,35 @@
     overflow-y: auto;
   }
 
+  &__error-icon-wrap {
+    margin-right: 0.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+  }
+
+  &__error-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  &__error {
+    display: inline-block;
+    // align-items: center;
+    background-color: v.$red_20;
+    color: v.$shade_20;
+    border-radius: v.$border_radius;
+    padding: 0.25rem;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    vertical-align: middle;
+
+    &--centered {
+      text-align: center;
+    }
+  }
+
   &__lnk-btn-wrap {
     display: flex;
     flex-direction: column;

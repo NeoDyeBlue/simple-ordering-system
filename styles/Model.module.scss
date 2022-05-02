@@ -274,16 +274,23 @@
     display: grid;
     gap: 1rem;
     grid-template-columns: 1fr 2fr;
-    border-bottom: 1px solid v.$shade_100;
-    padding: v.$fluid_padding 0;
+    border: 1px solid v.$shade_120;
+    padding: v.$fluid_padding;
+    border-radius: v.$border_radius;
 
-    &:last-child {
-      border: none;
-    }
+    // &:last-child {
+    //   border: none;
+    // }
   }
 
   &__spec-field {
     font-size: 1rem;
     color: v.$shade_200;
+  }
+
+  &__spec-description {
+    // background-color: v.$shade_40;
+    // padding: 1rem;
+    border-radius: v.$border_radius;
   }
 }

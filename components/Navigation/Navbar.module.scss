@@ -131,6 +131,12 @@
     display: flex;
     align-items: center;
     color: v.$shade_200;
+
+    &--auth-links {
+      border-left: 1px solid v.$shade_100;
+      padding-left: v.$fluid_padding;
+      gap: 0.5rem;
+    }
   }
 
   &__menu-link {
@@ -140,9 +146,40 @@
     color: v.$shade_200;
   }
 
+  &__menu-auth-link {
+    color: v.$shade_20;
+    background-color: v.$complement_20;
+    font-weight: 700;
+    text-align: center;
+    text-transform: capitalize;
+    border-radius: v.$border_radius;
+    padding: 0.25rem;
+    max-height: 32px;
+
+    &--no-fill {
+      background-color: transparent;
+      color: v.$shade_200;
+    }
+  }
+
   &__menu-link-icon {
     width: 32px;
     height: 32px;
+  }
+
+  &__account-image-wrap {
+    width: 32px;
+    height: 32px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  &__account-image {
+    object-fit: cover;
   }
 
   &__dropmenu {

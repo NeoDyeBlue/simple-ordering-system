@@ -1,0 +1,100 @@
+@use "./mixins";
+@use "./variables" as v;
+@use "./form";
+
+.account {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: v.$fluid_padding;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 3fr;
+
+  &__page-header-wrap {
+    padding: v.$fluid_padding 0;
+    grid-column: 1 / -1;
+  }
+
+  &__image-change-wrap {
+    grid-column: 1 / -1;
+
+    @include mixins.tablet() {
+      grid-column: 1 / 2;
+    }
+  }
+
+  &__image-change {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: v.$fluid_padding 0;
+    gap: 1rem;
+  }
+
+  &__image-selector-wrap {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    filter: drop-shadow(v.$drop_shadow_layer_1)
+      drop-shadow(v.$drop_shadow_layer_2) drop-shadow(v.$drop_shadow_layer_3)
+      drop-shadow(v.$drop_shadow_layer_4) drop-shadow(v.$drop_shadow_layer_5);
+    // box-shadow: 0 4px 4px rgba($color: #000000, $alpha: 0.2);
+  }
+
+  &__image-selector-button {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  &__image-selector-icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    border-radius: 50%;
+    top: 0;
+    right: 0;
+    background-color: v.$complement_20;
+    z-index: 1;
+    padding: 0.2rem;
+  }
+
+  &__image-selector-icon {
+    width: 24px;
+    height: 24px;
+    color: white;
+  }
+
+  &__image {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  &__form-wrap {
+    grid-column: 1 / -1;
+    padding: v.$fluid_padding 0;
+    border-bottom: 1px solid v.$shade_120;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    @include mixins.tablet() {
+      grid-column: 2 / -1;
+    }
+  }
+}

@@ -39,9 +39,9 @@ export default function SignUp() {
 
     if (inputValues.password == inputValues.confirmPassword) {
       const { confirmPassword, ...formBody } = inputValues;
-      console.log(formBody);
+
       fetch("/api/auth/signup", {
-        body: JSON.stringify(inputValues),
+        body: JSON.stringify(formBody),
         headers: { "Content-Type": "application/json" },
         method: "POST",
       })

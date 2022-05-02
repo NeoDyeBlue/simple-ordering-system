@@ -8,8 +8,9 @@
   filter: drop-shadow(v.$drop_shadow_layer_1)
     drop-shadow(v.$drop_shadow_layer_2) drop-shadow(v.$drop_shadow_layer_3)
     drop-shadow(v.$drop_shadow_layer_4) drop-shadow(v.$drop_shadow_layer_5);
-  min-width: 250px;
+  // min-width: 250px;
   // min-height: 250px;
+  width: 100%;
   justify-content: space-between;
   position: relative;
 
@@ -39,7 +40,7 @@
     padding: 1rem 0;
   }
 
-  &__item {
+  &__link {
     padding: 0.75rem;
     display: flex;
     align-items: center;
@@ -88,9 +89,12 @@
     border-top: 1px solid v.$shade_120;
     // background-color: v.$shade_160;
     padding: 0.75rem;
+    gap: 0.5rem;
+    width: 200px;
+    // width: 100%;
   }
 
-  &__button {
+  &__button-link {
     border-radius: v.$border_radius;
     background-color: v.$complement_20;
     font-weight: 700;
@@ -98,10 +102,7 @@
     padding: 0.75em 1em;
     text-transform: capitalize;
     cursor: pointer;
-
-    &:nth-child(2) {
-      margin-left: 1rem;
-    }
+    flex-shrink: 0;
 
     &--no-fill {
       background-color: transparent;

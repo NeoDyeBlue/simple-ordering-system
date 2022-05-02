@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, useContext } from "react";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
 import { ClientContext } from "../../contexts/Client.context";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+// import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { CSSTransition } from "react-transition-group";
@@ -14,6 +14,9 @@ import Link from "next/link";
 import Image from "next/image";
 import ClientDropMenu from "./DropMenu/ClientDropMenu";
 import styles from "./Navbar.module.scss";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import useSWR from "swr";
 
 export default function Navbar() {
   // const { setDropMenuIsOpen, dropMenuIsOpen } = useContext(ClientContext);
@@ -25,6 +28,8 @@ export default function Navbar() {
   const matches = useMediaQuery("(min-width:768px)");
   useOnClickOutside(menuRef, () => setDropMenuIsOpen(false));
   useOnClickOutside(searchBoxRef, () => setSearchBoxVisible(false));
+
+  const { data, error } = useSWR("/api/user", { revalidateOnMount: true });
 
   function handleInputChange(event) {
     setInputData(event.target.value);
@@ -106,28 +111,61 @@ export default function Navbar() {
                   </a>
                 </Link>
               </li>
+              {!data?.authenticated && (
+                <li
+                  className={`${styles["c-navbar__menu-list-item"]} ${styles["c-navbar__menu-list-item--auth-links"]}`}
+                >
+                  <Link href="/login">
+                    <a
+                      className={`${styles["c-navbar__menu-auth-link"]} ${styles["c-navbar__menu-auth-link--no-fill"]}`}
+                    >
+                      Login
+                    </a>
+                  </Link>
+                  <Link href="/signup">
+                    <a className={styles["c-navbar__menu-auth-link"]}>
+                      Sign Up
+                    </a>
+                  </Link>
+                </li>
+              )}
             </ul>
           )}
-          <button
-            className={`${styles["c-navbar__button"]} ${
-              dropMenuIsOpen ? styles["c-navbar__button--active"] : ""
-            }`}
-            onClick={() => setDropMenuIsOpen(!dropMenuIsOpen)}
-          >
-            {matches ? (
-              <AccountCircleOutlinedIcon
-                className={`${styles["c-navbar__icon"]} ${
-                  dropMenuIsOpen ? styles["c-navbar__icon--active"] : ""
-                }`}
-              />
-            ) : (
+          {!matches && (
+            <button
+              className={`${styles["c-navbar__button"]} ${
+                dropMenuIsOpen ? styles["c-navbar__button--active"] : ""
+              }`}
+              onClick={() => setDropMenuIsOpen(!dropMenuIsOpen)}
+            >
               <MenuOutlinedIcon
                 className={`${styles["c-navbar__icon"]} ${
                   dropMenuIsOpen ? styles["c-navbar__icon--active"] : ""
                 }`}
               />
-            )}
-          </button>
+            </button>
+          )}
+          {matches && data?.authenticated && (
+            <button
+              className={`${styles["c-navbar__button"]} ${
+                dropMenuIsOpen ? styles["c-navbar__button--active"] : ""
+              }`}
+              onClick={() => setDropMenuIsOpen(!dropMenuIsOpen)}
+            >
+              <div className={styles["c-navbar__account-image-wrap"]}>
+                {data?.userData?.image?.url ? (
+                  <Image
+                    src={data.userData.image.url}
+                    alt="user pic"
+                    layout="fill"
+                    className={styles["c-navbar__account-image"]}
+                  />
+                ) : (
+                  <Skeleton circle={true} width={36} height={36} />
+                )}
+              </div>
+            </button>
+          )}
           <CSSTransition
             in={dropMenuIsOpen}
             timeout={200}
@@ -135,7 +173,7 @@ export default function Navbar() {
             classNames="menu-anim"
           >
             <div className={styles["c-navbar__dropmenu"]}>
-              <ClientDropMenu />
+              <ClientDropMenu authData={data} />
             </div>
           </CSSTransition>
         </div>

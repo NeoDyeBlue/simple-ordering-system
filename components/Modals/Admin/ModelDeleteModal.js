@@ -3,6 +3,7 @@ import useOnClickOutside from "../../../hooks/useOnClickOutside";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { AdminContext } from "../../../contexts/Admin.context";
 import styles from "./AdminModal.module.scss";
+import { mutate } from "swr";
 
 export default function ModelDeleteModal() {
   const {
@@ -23,9 +24,7 @@ export default function ModelDeleteModal() {
       .then((res) => res.json())
       .then((data) => {
         if (data.deleted) {
-          setModelTableData(
-            modelTableData.filter((data) => data._id != modelToDelete._id)
-          );
+          mutate("/api/admin/models");
           setModelDeleteModalIsOpen(false);
         }
       })

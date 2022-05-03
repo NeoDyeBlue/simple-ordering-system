@@ -12,6 +12,7 @@ import { CSSTransition } from "react-transition-group";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import ClientDropMenu from "./DropMenu/ClientDropMenu";
 import styles from "./Navbar.module.scss";
 import Skeleton from "react-loading-skeleton";
@@ -28,11 +29,20 @@ export default function Navbar() {
   const matches = useMediaQuery("(min-width:768px)");
   useOnClickOutside(menuRef, () => setDropMenuIsOpen(false));
   useOnClickOutside(searchBoxRef, () => setSearchBoxVisible(false));
-
+  const router = useRouter();
   const { data, error } = useSWR("/api/user", { revalidateOnMount: true });
 
   function handleInputChange(event) {
     setInputData(event.target.value);
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    if (inputData.length) {
+      const formatted = inputData.split(" ").join("+");
+      router.push(`/search?q=${formatted}`);
+    }
   }
   return (
     <div className={styles["c-navbar"]}>
@@ -40,7 +50,8 @@ export default function Navbar() {
         <Link href="/">
           <a className={styles["c-navbar__logo"]}>Emphoneum</a>
         </Link>
-        <div
+        <form
+          onSubmit={handleSubmit}
           ref={searchBoxRef}
           className={`${styles["c-navbar__searchbox-wrap"]} ${
             searchBoxVisible ? styles["c-navbar__searchbox-wrap--visible"] : ""
@@ -80,7 +91,7 @@ export default function Navbar() {
               className={`${styles["c-navbar__icon"]} ${styles["c-navbar__icon--gray"]}`}
             />
           )}
-        </div>
+        </form>
         <div ref={menuRef} className={styles["c-navbar__menu-wrap"]}>
           {matches && (
             <ul className={styles["c-navbar__menu-list"]}>

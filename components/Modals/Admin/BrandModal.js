@@ -7,7 +7,7 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { useFilePicker } from "use-file-picker";
 import { AdminContext } from "../../../contexts/Admin.context";
 import styles from "./AdminModal.module.scss";
-import useSWR from "swr";
+import { mutate } from "swr";
 
 const initialNameErrorState = false;
 
@@ -100,16 +100,17 @@ export default function BrandModal() {
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
-            setBrandTableData([
-              ...(!brandTableData.some((item) => {
-                if (item._id == data.brand._id) return true;
-              })
-                ? data.brand
-                : []),
-              ...brandTableData.map((item) =>
-                item._id == data.brand._id ? data.brand : item
-              ),
-            ]);
+            mutate("/api/admin/brands");
+            // setBrandTableData([
+            //   ...(!brandTableData.some((item) => {
+            //     if (item._id == data.brand._id) return true;
+            //   })
+            //     ? data.brand
+            //     : []),
+            //   ...brandTableData.map((item) =>
+            //     item._id == data.brand._id ? data.brand : item
+            //   ),
+            // ]);
             setBrandModalIsOpen(false);
           } else {
             setNameError(data.exists);
@@ -125,7 +126,8 @@ export default function BrandModal() {
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
-            setBrandTableData([data.brand, ...brandTableData]);
+            // setBrandTableData([data.brand, ...brandTableData]);
+            mutate("/api/admin/brands");
             setBrandModalIsOpen(false);
           } else {
             setNameError(data.exists);

@@ -10,27 +10,27 @@ import ArrowDropUpOutlinedIcon from "@mui/icons-material/ArrowDropUpOutlined";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { AdminContext } from "../../contexts/Admin.context";
 import { useContext, useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 export default function AdminSidebar() {
-  const { setMenuIsOpen, activePage } = useContext(AdminContext);
+  const router = useRouter();
+  const { setMenuIsOpen } = useContext(AdminContext);
   const screenMatches = useMediaQuery("(min-width:1024px)");
   const [dropdown, setDropdown] = useState({
-    open: false,
-    active: false,
+    open:
+      router.pathname == "/admin/brands" || router.pathname == "/admin/models",
+    active:
+      router.pathname == "/admin/brands" || router.pathname == "/admin/models",
   });
-  useEffect(() => {
-    setDropdown({
-      open: activePage == "brands" || activePage == "models",
-      active: activePage == "brands" || activePage == "models",
-    });
-  }, [activePage]);
   function handleItemClick(event) {
     const { name } = event.target;
-    if (name != activePage || name != "phone") {
+    const pathName = name == "dashboard" ? "/admin" : `/admin/${name}`;
+    console.log(pathName, name, router.pathname);
+    if (pathName != router.pathname || name != "phone") {
       if (name == "phone") {
         setDropdown((prev) => ({
-          active: true,
+          active: false,
           open: !prev.open,
         }));
       } else if (name == "brands" || name == "models") {
@@ -66,7 +66,7 @@ export default function AdminSidebar() {
       <ul className={styles["sidebar__list"]}>
         <li
           className={`${styles["sidebar__item"]} ${
-            activePage == "dashboard" && !dropdown.active
+            router.pathname == "/admin" && !dropdown.active
               ? styles["sidebar__item--active"]
               : ""
           }`}
@@ -84,7 +84,7 @@ export default function AdminSidebar() {
         </li>
         <li
           className={`${styles["sidebar__item"]} ${
-            activePage == "orders" && !dropdown.active
+            router.pathname == "/admin/orders" && !dropdown.active
               ? styles["sidebar__item--active"]
               : ""
           }`}
@@ -133,7 +133,7 @@ export default function AdminSidebar() {
           >
             <li
               className={`${styles["sidebar__dropdown-item"]} ${
-                activePage == "brands"
+                router.pathname == "/admin/brands"
                   ? styles["sidebar__dropdown-item--active"]
                   : ""
               }`}
@@ -150,7 +150,7 @@ export default function AdminSidebar() {
             </li>
             <li
               className={`${styles["sidebar__dropdown-item"]} ${
-                activePage == "models"
+                router.pathname == "/admin/models"
                   ? styles["sidebar__dropdown-item--active"]
                   : ""
               }`}
@@ -169,7 +169,7 @@ export default function AdminSidebar() {
         </li>
         <li
           className={`${styles["sidebar__item"]} ${
-            activePage == "featured" && !dropdown.active
+            router.pathname == "/admin/featured" && !dropdown.active
               ? styles["sidebar__item--active"]
               : ""
           }`}
@@ -187,7 +187,7 @@ export default function AdminSidebar() {
         </li>
         <li
           className={`${styles["sidebar__item"]} ${
-            activePage == "users" && !dropdown.active
+            router.pathname == "/admin/users" && !dropdown.active
               ? styles["sidebar__item--active"]
               : ""
           }`}

@@ -40,9 +40,9 @@ export default function CategoryList() {
 
   useEffect(() => {
     const listEl = listRef.current;
-    ScrollTrigger.config({
-      autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
-    });
+    // ScrollTrigger.config({
+    //   autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
+    // });
     timeline.current = gsap
       .timeline({
         scrollTrigger: {
@@ -51,7 +51,7 @@ export default function CategoryList() {
           // markers: true, //for testing the trigger
           // endTrigger: listEl,
           end: `${60 + listEl.clientHeight}px 59px`,
-          // scroller: "#__next",
+          scroller: "#__next",
           // toggleActions: "play none none reverse",
           scrub: true,
         },

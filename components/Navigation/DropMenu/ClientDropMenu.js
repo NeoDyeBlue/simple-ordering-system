@@ -23,47 +23,41 @@ export default function ClientDropMenu(props) {
             </a>
           </Link>
         </li>
-        {!matches && (
-          <>
-            <li className={styles["drop-menu__item"]}>
-              <Link href={"/cart"}>
-                <a className={styles["drop-menu__link"]}>
-                  <div className={styles["drop-menu__icon-wrapper"]}>
-                    <ShoppingCartOutlinedIcon
-                      className={styles["drop-menu__icon"]}
-                    />
-                  </div>
-                  <p className={styles["drop-menu__item-text"]}>My Cart</p>
-                </a>
-              </Link>
-            </li>
-            <li className={styles["drop-menu__item"]}>
-              <Link href={"/orders"}>
-                <a className={styles["drop-menu__link"]}>
-                  <div className={styles["drop-menu__icon-wrapper"]}>
-                    <ShoppingBagOutlinedIcon
-                      className={styles["drop-menu__icon"]}
-                    />
-                  </div>
-                  <p className={styles["drop-menu__item-text"]}>Orders</p>
-                </a>
-              </Link>
-              {/* <span className={styles["drop-menu__item-badge"]}>1</span> */}
-            </li>
-            <li className={styles["drop-menu__item"]}>
-              <Link href={"/wishlist"}>
-                <a className={styles["drop-menu__link"]}>
-                  <div className={styles["drop-menu__icon-wrapper"]}>
-                    <FavoriteOutlinedIcon
-                      className={styles["drop-menu__icon"]}
-                    />
-                  </div>
-                  <p className={styles["drop-menu__item-text"]}>Wishlist</p>
-                </a>
-              </Link>
-            </li>
-          </>
-        )}
+        <li className={styles["drop-menu__item"]}>
+          <Link href={"/cart"}>
+            <a className={styles["drop-menu__link"]}>
+              <div className={styles["drop-menu__icon-wrapper"]}>
+                <ShoppingCartOutlinedIcon
+                  className={styles["drop-menu__icon"]}
+                />
+              </div>
+              <p className={styles["drop-menu__item-text"]}>My Cart</p>
+            </a>
+          </Link>
+        </li>
+        <li className={styles["drop-menu__item"]}>
+          <Link href={"/orders"}>
+            <a className={styles["drop-menu__link"]}>
+              <div className={styles["drop-menu__icon-wrapper"]}>
+                <ShoppingBagOutlinedIcon
+                  className={styles["drop-menu__icon"]}
+                />
+              </div>
+              <p className={styles["drop-menu__item-text"]}>Orders</p>
+            </a>
+          </Link>
+          {/* <span className={styles["drop-menu__item-badge"]}>1</span> */}
+        </li>
+        <li className={styles["drop-menu__item"]}>
+          <Link href={"/wishlist"}>
+            <a className={styles["drop-menu__link"]}>
+              <div className={styles["drop-menu__icon-wrapper"]}>
+                <FavoriteOutlinedIcon className={styles["drop-menu__icon"]} />
+              </div>
+              <p className={styles["drop-menu__item-text"]}>Wishlist</p>
+            </a>
+          </Link>
+        </li>
       </ul>
       <div className={styles["drop-menu__account-actions"]}>
         {!props.authData?.authenticated ? (

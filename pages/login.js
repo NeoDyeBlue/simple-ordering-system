@@ -3,6 +3,7 @@ import styles from "../styles/Form.module.scss";
 import ErrorOutlinedIcon from "@mui/icons-material/ErrorOutlined";
 import Link from "next/link";
 import Head from "next/head";
+import { mutate } from "swr";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
@@ -37,6 +38,7 @@ export default function SignUp() {
       .then((res) => res.json())
       .then((data) => {
         if (data.userExists && data.credentialsMatch) {
+          mutate("/api/user");
           router.push("/");
         } else {
           if (!data.userExists) {

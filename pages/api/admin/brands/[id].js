@@ -1,4 +1,8 @@
-import { getBrand, updateBrand, deleteBrand } from "../../../lib/brand-queries";
+import {
+  getBrand,
+  updateBrand,
+  deleteBrand,
+} from "../../../../lib/brand-queries";
 
 export default async function handler(req, res) {
   let result = null;

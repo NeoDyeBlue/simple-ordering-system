@@ -7,25 +7,20 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import Head from "next/head";
 import { AdminContext } from "../../contexts/Admin.context";
 import { useEffect, useContext, useState } from "react";
-import styles from "../../styles/admin/Models.module.scss";
+import styles from "../../styles/admin/Tables.module.scss";
 import Image from "next/image";
+import useSWR from "swr";
 
 export default function Models() {
   const {
-    setActivePage,
     setModelModalIsOpen,
     setModelDeleteModalIsOpen,
     setModelToEdit,
     setModelToDelete,
-    setModelTableData,
-    modelTableData,
   } = useContext(AdminContext);
-  useEffect(() => setActivePage("models"), []);
-  useEffect(() => {
-    fetch("/api/admin/models")
-      .then((res) => res.json())
-      .then((data) => setModelTableData([...data.phones]));
-  }, []);
+  const { data: phonesData, error } = useSWR("/api/admin/models", {
+    revalidateOnMount: true,
+  });
 
   function handleAddModelClick() {
     setModelToEdit(null);
@@ -33,8 +28,8 @@ export default function Models() {
   }
 
   function createTableRows() {
-    if (modelTableData) {
-      return modelTableData.map((data) => (
+    if (phonesData) {
+      return phonesData.phones.map((data) => (
         <Tr className={styles["table__row"]} key={data._id}>
           <Td className={styles["table__td"]}>
             <div className={styles["table__image-wrap"]}>
@@ -117,18 +112,18 @@ export default function Models() {
   const tableRows = createTableRows();
 
   return (
-    <div className={styles["brands"]}>
+    <div className={styles["panel"]}>
       <Head>
         <title>Phone Models | Emphoneum Admin</title>
       </Head>
       <button
         onClick={handleAddModelClick}
-        className={styles["brands__add-button"]}
+        className={styles["panel__add-button"]}
       >
-        <AddOutlinedIcon className={styles["brand__add-button-icon"]} />
+        <AddOutlinedIcon className={styles["panel__add-button-icon"]} />
         Add a Model
       </button>
-      <div className={styles["brands__table-wrap"]}>
+      <div className={styles["panel__table-wrap"]}>
         <Table className={styles["table"]}>
           <Thead className={styles["table__head"]}>
             <Tr className={styles["table__head-row"]}>
@@ -142,7 +137,9 @@ export default function Models() {
               <Th className={styles["table__th"]}>Actions</Th>
             </Tr>
           </Thead>
-          <Tbody className={styles["table__body"]}>{tableRows.reverse()}</Tbody>
+          <Tbody className={styles["table__body"]}>
+            {tableRows?.reverse()}
+          </Tbody>
         </Table>
       </div>
     </div>

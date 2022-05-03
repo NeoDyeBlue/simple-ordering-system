@@ -3,14 +3,10 @@ import useOnClickOutside from "../../../hooks/useOnClickOutside";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { AdminContext } from "../../../contexts/Admin.context";
 import styles from "./AdminModal.module.scss";
+import { mutate } from "swr";
 
 export default function BrandDeleteModal() {
-  const {
-    brandToDelete,
-    brandTableData,
-    setBrandTableData,
-    setBrandDeleteModalIsOpen,
-  } = useContext(AdminContext);
+  const { brandToDelete, setBrandDeleteModalIsOpen } = useContext(AdminContext);
   const modalRef = useRef(null);
 
   useOnClickOutside(modalRef, () => setBrandDeleteModalIsOpen(false));
@@ -23,9 +19,7 @@ export default function BrandDeleteModal() {
       .then((res) => res.json())
       .then((data) => {
         if (data.deleted) {
-          setBrandTableData(
-            brandTableData.filter((data) => data._id != brandToDelete._id)
-          );
+          mutate("/api/admin/brands");
           setBrandDeleteModalIsOpen(false);
         }
       })

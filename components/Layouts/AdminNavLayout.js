@@ -1,4 +1,4 @@
-import AdminSidebar from "../Navigation/AdminSideBar";
+import AdminSidebar from "../Navigation/AdminSidebar";
 import AdminNavbar from "../Navigation/AdminNavbar";
 import BrandModal from "../Modals/Admin/BrandModal";
 import BrandDeleteModal from "../Modals/Admin/BrandDeleteModal";

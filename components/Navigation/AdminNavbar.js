@@ -7,12 +7,15 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { CSSTransition } from "react-transition-group";
 import { AdminContext } from "../../contexts/Admin.context";
 import { useState, useRef, useContext } from "react";
+import { useRouter } from "next/router";
 
 export default function AdminNavbar() {
+  const router = useRouter();
   const screenMatches = useMediaQuery("(min-width:1024px)");
   const menuRef = useRef(null);
-  const { setMenuIsOpen, activePage } = useContext(AdminContext);
+  const { setMenuIsOpen } = useContext(AdminContext);
   const [dropMenuIsOpen, setDropMenuIsOpen] = useState(false);
+  const pathName = router.pathname.split("/");
   useOnClickOutside(menuRef, () => setDropMenuIsOpen(false));
   return (
     <div className={styles["navbar"]}>
@@ -25,7 +28,11 @@ export default function AdminNavbar() {
             <MenuOutlinedIcon className={styles["navbar__button-icon"]} />
           </button>
         )}
-        <h1 className={styles["navbar__name"]}>{activePage}</h1>
+        <h1 className={styles["navbar__name"]}>
+          {pathName.length <= 2
+            ? "Dashboard"
+            : pathName[2].charAt(0).toUpperCase() + pathName[2].slice(1)}
+        </h1>
       </div>
       <div ref={menuRef} className={styles["navbar__profile-wrap"]}>
         <button

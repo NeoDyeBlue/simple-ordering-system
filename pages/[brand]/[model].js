@@ -7,12 +7,14 @@ import CameraOutlinedIcon from "@mui/icons-material/CameraOutlined";
 import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import Image from "next/image";
 import ClientLayout from "../../components/Layouts/ClientLayout";
+import { ClientContext } from "../../contexts/Client.context";
 import { useRouter } from "next/router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import useSWR from "swr";
 import { getPhone } from "../../lib/phone-queries";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import CheckoutModal from "../../components/Modals/Client/CheckoutModal";
 import Head from "next/head";
 
 export async function getServerSideProps(context) {
@@ -32,6 +34,8 @@ export async function getServerSideProps(context) {
 
 export default function Model({ phoneData }) {
   const router = useRouter();
+  const { setCheckoutModalIsOpen, checkoutModalIsOpen, setCheckoutItems } =
+    useContext(ClientContext);
   const { brand, model } = router.query;
   const [formData, setFormData] = useState({
     variation: "",
@@ -48,14 +52,14 @@ export default function Model({ phoneData }) {
         variation: data.phone.variations.find(
           (variation) => variation.quantity >= 1
         ),
-        color: data.phone.colors[0]._id,
+        color: data.phone.colors[0],
       });
     }
   }, [data]);
 
-  function handleInputChange(event, variation) {
-    const { value, name } = event.target;
-    setFormData((prev) => ({ ...prev, [name]: variation || value }));
+  function handleInputChange(event, value) {
+    const { name } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   }
 
   const variationInputs = data?.phone.variations.map((variation) => (
@@ -111,15 +115,15 @@ export default function Model({ phoneData }) {
           id={color._id}
           value={color._id}
           required
-          checked={formData.color == color._id}
-          onChange={handleInputChange}
+          checked={formData.color._id == color._id}
+          onChange={(e) => handleInputChange(e, color)}
         />
         <label
           style={{ backgroundColor: color.hexValue }}
           className={styles["model__form-radio-color-label"]}
           htmlFor={color._id}
         >
-          {formData.color == color._id && (
+          {formData.color._id == color._id && (
             <CheckOutlinedIcon
               style={{ color: iconColor }}
               className={styles["model__form-radio-color-icon-check"]}
@@ -134,6 +138,20 @@ export default function Model({ phoneData }) {
     event.preventDefault();
 
     console.log(formData);
+
+    setCheckoutItems([
+      {
+        phone: {
+          id: data.phone._id,
+          image: data.phone.image.url,
+          name: data.phone.name,
+        },
+        variation: formData.variation,
+        color: formData.color,
+      },
+    ]);
+
+    setCheckoutModalIsOpen(true);
   }
   return (
     <div className={styles["model"]}>
@@ -143,6 +161,7 @@ export default function Model({ phoneData }) {
           Brands
         </title>
       </Head>
+      {checkoutModalIsOpen && <CheckoutModal />}
       <div className={styles["model__header-wrap"]}>
         <h1 className={styles["model__name"]}>
           {data?.phone.name || <Skeleton className={"skeleton-model-name"} />}
@@ -169,7 +188,7 @@ export default function Model({ phoneData }) {
             />
           )}
         </div>
-        <div className={styles["model__form-wrap"]} onSubmit={handleSubmit}>
+        <div className={styles["model__form-wrap"]}>
           <div className={styles["model__main-specs-wrap"]}>
             <div className={styles["model__spec-box"]}>
               <SmartphoneOutlinedIcon className={styles["model__spec-icon"]} />
@@ -211,7 +230,7 @@ export default function Model({ phoneData }) {
               </p>
             </div>
           </div>
-          <form className={styles["model__form"]}>
+          <form className={styles["model__form"]} onSubmit={handleSubmit}>
             <div className={styles["model__form-fieldset"]}>
               <p className={styles["model__form-legend"]}>Choose a variation</p>
               <ul className={styles["model__form-selections-wrap"]}>
@@ -247,7 +266,11 @@ export default function Model({ phoneData }) {
               <button className={styles["model__form-button"]} type="button">
                 Add to Cart
               </button>
-              <button className={styles["model__form-button"]} type="submit">
+              <button
+                className={styles["model__form-button"]}
+                type="submit"
+                // onClick={() => setCheckoutModalIsOpen(true)}
+              >
                 Buy Now
               </button>
             </div>

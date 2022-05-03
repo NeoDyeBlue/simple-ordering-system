@@ -2,22 +2,22 @@ import { createContext, useReducer, useEffect } from "react";
 import { SWRConfig } from "swr";
 
 const actions = {
-  SET_PHONE_CATEGORIES: "SET_PHONE_CATEGORIES",
-  SET_ACTIVE_PAGE: "SET_ACTIVE_PAGE",
+  SET_CHECKOUT_MODAL_IS_OPEN: "SET_CHECKOUT_MODAL_IS_OPN",
+  SET_CHECKOUT_ITEMS: "SET_CHECKOUT_ITEMS"
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case actions.SET_PHONE_CATEGORIES:
+    case actions.SET_CHECKOUT_MODAL_IS_OPEN:
       return {
         ...state,
-        phoneCategories: [...action.categories],
+        checkoutModalIsOpen: action.isOpen,
       };
-    case actions.SET_ACTIVE_PAGE:
-      return {
-        ...state,
-        activePage: action.page,
-      };
+      case actions.SET_CHECKOUT_ITEMS:
+        return {
+          ...state,
+          checkoutItems: action.items,
+        };
     default:
       return state;
   }
@@ -27,8 +27,8 @@ export const ClientContext = createContext();
 
 export function ClientProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, {
-    activePage: "",
-    phoneCategories: [],
+    checkoutModalIsOpen: false,
+    checkoutItems: []
   });
 
   const testTime = 1651116900000;
@@ -42,23 +42,14 @@ export function ClientProvider({ children }) {
     };
   }, []);
 
-  // useEffect(() => {
-  //   fetch("/api/brands")
-  //     .then((res) => res.json())
-  //     .then((data) =>
-  //       dispatch({
-  //         type: actions.SET_PHONE_CATEGORIES,
-  //         categories: data.brands,
-  //       })
-  //     )
-  //     .catch((err) => console.log(err));
-  // }, []);
-
   const value = {
-    activePage: state.activePage,
-    phoneCategories: state.phoneCategories,
-    setActivePage: (page) => {
-      dispatch({ type: actions.SET_ACTIVE_PAGE, page });
+    checkoutModalIsOpen: state.checkoutModalIsOpen,
+    checkoutItems: state.checkoutItems,
+    setCheckoutModalIsOpen: (isOpen) => {
+      dispatch({ type: actions.SET_CHECKOUT_MODAL_IS_OPEN, isOpen });
+    },
+    setCheckoutItems: (items) => {
+      dispatch({ type: actions.SET_CHECKOUT_ITEMS, items });
     },
     // setPhoneCategories: (categories) => {
     //   dispatch({ type: actions.SET_PHONE_CATEGORIES, categories });
@@ -66,17 +57,6 @@ export function ClientProvider({ children }) {
   };
 
   return (
-    <ClientContext.Provider value={value}>
-      <SWRConfig
-        value={{
-          // refreshInterval: 3000,
-          revalidateOnFocus: false,
-          fetcher: (resource, init) =>
-            fetch(resource, init).then((res) => res.json()),
-        }}
-      >
-        {children}
-      </SWRConfig>
-    </ClientContext.Provider>
+    <ClientContext.Provider value={value}>{children}</ClientContext.Provider>
   );
 }

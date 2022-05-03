@@ -11,6 +11,10 @@
   gap: v.$fluid_margin;
   min-height: 100vh;
 
+  &--no-margin-top {
+    margin-top: 0;
+  }
+
   &__featured {
     width: 100%;
   }
@@ -38,6 +42,20 @@
       background-color: transparent;
       border-bottom: 1px solid v.$shade_120;
       z-index: 0;
+    }
+  }
+
+  &__search-label-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    // overflow-x: hidden;
+    padding: v.$fluid_padding;
+    width: 100%;
+
+    &--margin-top {
+      margin-top: v.$fluid_margin;
     }
   }
 

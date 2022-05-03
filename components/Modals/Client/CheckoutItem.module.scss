@@ -1,0 +1,81 @@
+@use "../../../styles/variables" as v;
+
+.checkout-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.5rem;
+  gap: 1rem;
+  border-radius: v.$border_radius;
+  border: 1px dashed v.$shade_120;
+
+  &__image-wrap {
+    display: flex;
+    min-width: 100px;
+    min-height: 100px;
+    max-width: 150px;
+    max-height: 150px;
+    width: 6vw;
+    height: 6vw;
+    // width: clamp(100px, 6vw, 150px);
+    // height: clamp(100px, 6vw, 150px);
+    aspect-ratio: 1;
+    flex-shrink: 0;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__image {
+    object-fit: contain;
+  }
+
+  &__info-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  &__name {
+    font-weight: 300;
+    font-size: 1.25rem;
+  }
+
+  &__selected-variation {
+    border-radius: v.$border_radius;
+    background-color: v.$shade_200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5em 0.75em;
+
+    &-text {
+      font-weight: 700;
+      color: v.$shade_20;
+      font-size: 0.875rem;
+    }
+  }
+
+  &__selected-color {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &-circ {
+      width: 24px;
+      height: 24px;
+      border: 1px solid v.$shade_200;
+      border-radius: 50%;
+    }
+
+    &-text {
+      color: v.$shade_200;
+      font-size: 0.875rem;
+    }
+  }
+
+  &__price {
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+}

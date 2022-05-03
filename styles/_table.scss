@@ -5,6 +5,10 @@
   background-color: v.$shade_20;
   border-collapse: collapse;
   min-height: 100%;
+  width: 100%;
+  // table-layout: auto;
+  // min-width: 100%;
+  // max-width: 100%;
 
   &__head {
     background-color: v.$shade_160;
@@ -38,10 +42,31 @@
     padding: 0.75rem;
     border-bottom: 1px solid v.$shade_80;
     color: inherit;
+    // width: 100%;
+    // min-width: 100px;
+
+    &--min-150 {
+      min-width: 150px;
+    }
 
     &:last-child {
       width: 150px;
     }
+  }
+
+  &__order-color-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &__order-color {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    // margin-right: 0.5rem;
+    border: 1px solid v.$shade_200;
+    border-radius: 50%;
   }
 
   &__pills-wrap {
@@ -61,17 +86,26 @@
     border-radius: v.$border_radius;
   }
 
-  &__table-image-wrap {
+  &__image-wrap {
     display: flex;
     position: relative;
     width: 64px;
     height: 64px;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+
+    &--circ {
+      border-radius: 50%;
+    }
   }
 
   &__image {
     object-fit: contain;
+
+    &--circ {
+      object-fit: cover;
+    }
   }
 
   &__buttons-wrap {

@@ -7,33 +7,22 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import Head from "next/head";
 import { AdminContext } from "../../contexts/Admin.context";
 import { useEffect, useContext } from "react";
-import styles from "../../styles/admin/Brands.module.scss";
+import styles from "../../styles/admin/Tables.module.scss";
 import Image from "next/image";
 import useSWR from "swr";
 
-const fetcher = async () => {
-  const response = await fetch("/api/admin/brands");
-  const data = await response.json();
-  return data;
-};
-
 export default function Brands() {
   const {
-    setActivePage,
     setBrandModalIsOpen,
     setBrandDeleteModalIsOpen,
     setBrandToEdit,
     setBrandToDelete,
-    setBrandTableData,
-    brandTableData,
+    // setBrandTableData,
+    // brandTableData,
   } = useContext(AdminContext);
-  const { data, error } = useSWR("brands", fetcher);
-  useEffect(() => setActivePage("brands"), []);
-  useEffect(() => {
-    fetch("/api/admin/brands")
-      .then((res) => res.json())
-      .then((data) => setBrandTableData([...data.brands]));
-  }, []);
+  const { data, error } = useSWR("/api/admin/brands", {
+    revalidateOnMount: true,
+  });
 
   function handleAddBrandClick() {
     setBrandToEdit(null);
@@ -88,18 +77,18 @@ export default function Brands() {
   const tableRows = createTableRows();
 
   return (
-    <div className={styles["brands"]}>
+    <div className={styles["panel"]}>
       <Head>
         <title>Phone Brands | Emphoneum Admin</title>
       </Head>
       <button
         onClick={handleAddBrandClick}
-        className={styles["brands__add-button"]}
+        className={styles["panel__add-button"]}
       >
         <AddOutlinedIcon className={styles["brand__add-button-icon"]} />
         Add a Brand
       </button>
-      <div className={styles["brands__table-wrap"]}>
+      <div className={styles["panel__table-wrap"]}>
         <Table className={styles["table"]}>
           <Thead className={styles["table__head"]}>
             <Tr className={styles["table__head-row"]}>

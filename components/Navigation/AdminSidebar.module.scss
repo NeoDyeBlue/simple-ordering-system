@@ -4,6 +4,7 @@
 .sidebar {
   background-color: v.$shade_20;
   height: 100%;
+  min-height: 100vh;
   // padding: 0.5rem v.$fluid_padding;
 
   &__logo-wrap {
@@ -122,16 +123,28 @@
     }
     &--active {
       background-color: v.$shade_160;
+
+      .sidebar__dropdown-item:hover {
+        background-color: v.$shade_180;
+      }
+    }
+
+    &:not(&--active) > .sidebar__dropdown-item:hover {
+      background-color: v.$shade_100;
     }
   }
 
   &__dropdown-item {
     border-left: 5px solid transparent;
-    &:hover {
-      background-color: v.$shade_180;
-    }
+
+    // &:not(&--active):hover {
+    //   background-color: v.$shade_100;
+    // }
     &--active {
       border-left: 5px solid v.$complement_20;
+      // &:hover {
+      //   background-color: v.$shade_180;
+      // }
     }
   }
 }

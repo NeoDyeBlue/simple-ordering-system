@@ -1,0 +1,24 @@
+@use "./variables" as v;
+@use "./mixins";
+
+.orders {
+  display: flex;
+  flex-direction: column;
+  max-width: 900px;
+  min-height: 100vh;
+  gap: 1rem;
+  padding: v.$fluid-padding;
+  margin: 0 auto;
+
+  &__header-wrap {
+    display: flex;
+    align-items: center;
+    padding: v.$fluid-padding 0;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}

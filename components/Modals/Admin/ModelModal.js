@@ -9,6 +9,7 @@ import { useFilePicker } from "use-file-picker";
 import { AdminContext } from "../../../contexts/Admin.context";
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
 import styles from "./AdminModal.module.scss";
+import useSWR, { mutate } from "swr";
 
 const initialNameErrorState = false;
 const initialFormData = {
@@ -34,14 +35,9 @@ const initialFormData = {
 };
 
 export default function ModelModal() {
-  const {
-    modelToEdit,
-    modelTableData,
-    setModelTableData,
-    setModelModalIsOpen,
-  } = useContext(AdminContext);
+  const { modelToEdit, setModelModalIsOpen } = useContext(AdminContext);
   const modalRef = useRef(null);
-  const [brandNames, setBrandNames] = useState([]);
+  // const [brandNames, setBrandNames] = useState([]);
   const [nameError, setNameError] = useState(initialNameErrorState);
   const [formData, setFormData] = useState(initialFormData);
 
@@ -224,14 +220,16 @@ export default function ModelModal() {
     maxFileSize: 3,
   });
 
-  useEffect(() => {
-    fetch("/api/admin/phones/brand")
-      .then((res) => res.json())
-      .then((data) => {
-        setBrandNames(data.brands);
-      })
-      .catch((err) => console.log(err));
-  }, [brandNames]);
+  const { data: brandNames, error } = useSWR("/api/admin/brands");
+
+  // useEffect(() => {
+  //   fetch("/api/admin/phones/brand")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setBrandNames(data.brands);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, [brandNames]);
 
   useEffect(() => {
     if (modelToEdit) {
@@ -287,7 +285,7 @@ export default function ModelModal() {
     }));
   }
 
-  const brandOptions = brandNames.map((brand, index) => (
+  const brandOptions = brandNames?.brands?.map((brand, index) => (
     <option className={styles["form__option"]} key={index} value={brand._id}>
       {brand.name}
     </option>
@@ -325,16 +323,7 @@ export default function ModelModal() {
         .then((data) => {
           console.log(data.phone._id);
           if (data.success) {
-            setModelTableData([
-              ...(!modelTableData.some((item) => {
-                if (item._id == data.phone._id) return true;
-              })
-                ? data.phone
-                : []),
-              ...modelTableData.map((item) =>
-                item._id == data.phone._id ? data.phone : item
-              ),
-            ]);
+            mutate("/api/admin/models");
             setModelModalIsOpen(false);
           } else {
             setNameError(data.exists);
@@ -350,7 +339,7 @@ export default function ModelModal() {
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
-            setModelTableData([...modelTableData, data.phone]);
+            mutate("/api/admin/models");
             setModelModalIsOpen(false);
           } else {
             setNameError(data.exists);

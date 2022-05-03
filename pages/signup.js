@@ -2,6 +2,7 @@ import ClientLayout from "../components/Layouts/ClientLayout";
 import ErrorOutlinedIcon from "@mui/icons-material/ErrorOutlined";
 import styles from "../styles/Form.module.scss";
 import { useRouter } from "next/router";
+import { mutate } from "swr";
 import Link from "next/link";
 import Head from "next/head";
 import { useState } from "react";
@@ -48,7 +49,7 @@ export default function SignUp() {
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
-            console.log(data);
+            mutate("/api/user");
             router.push("/");
           } else {
             if (data.existing.email) {

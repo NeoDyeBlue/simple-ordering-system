@@ -1,0 +1,38 @@
+@use "../mixins";
+@use "../variables" as v;
+@use "../table";
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  position: relative;
+
+  &__add-button {
+    padding: 0.5em 0.75em;
+    border-radius: v.$border_radius;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    cursor: pointer;
+    background-color: v.$complement_20;
+    color: v.$shade_20;
+
+    &-icon {
+      width: 36px;
+      height: 36px;
+      color: inherit;
+    }
+  }
+
+  &__table-wrap {
+    border-radius: v.$border_radius;
+    background-color: v.$shade_20;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    // border: 1px solid v.$shade_80;
+  }
+}

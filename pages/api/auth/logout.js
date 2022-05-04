@@ -1,9 +1,7 @@
 import { serialize } from "cookie";
 
 export default async function signOut(req, res) {
-  //   const { cookies } = req;
-  //   const jwt = cookies.chatjwt;
-  const serialized = serialize("chatjwt", null, {
+  const serialized = serialize("sessionToken", null, {
     httpOnly: true,
     sameSite: "strict",
     maxAge: -1,

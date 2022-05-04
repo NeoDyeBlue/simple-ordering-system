@@ -87,9 +87,25 @@
     }
   }
 
+  &__status-price-wrap {
+    display: flex;
+    flex-direction: column;
+    margin: auto 0;
+    gap: 0.5rem;
+
+    @include mixins.mobile() {
+      align-items: flex-end;
+    }
+  }
+
   &__price {
     font-weight: 700;
     font-size: 1.25rem;
-    margin: auto 0;
+  }
+
+  &__status {
+    font-weight: 300;
+    text-transform: uppercase;
+    font-size: 0.75rem;
   }
 }

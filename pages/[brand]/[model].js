@@ -1,6 +1,6 @@
 import styles from "../../styles/Model.module.scss";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
+// import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+// import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import SmartphoneOutlinedIcon from "@mui/icons-material/SmartphoneOutlined";
 import BatteryFullOutlinedIcon from "@mui/icons-material/BatteryFullOutlined";
 import CameraOutlinedIcon from "@mui/icons-material/CameraOutlined";
@@ -49,9 +49,7 @@ export default function Model({ phoneData }) {
   useEffect(() => {
     if (data) {
       setFormData({
-        variation: data.phone.variations.find(
-          (variation) => variation.quantity >= 1
-        ),
+        variation: data.phone.variations[0],
         color: data.phone.colors[0],
       });
     }
@@ -134,11 +132,7 @@ export default function Model({ phoneData }) {
     );
   });
 
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    console.log(formData);
-
+  function handleSubmit() {
     setCheckoutItems([
       {
         phone: {
@@ -161,16 +155,17 @@ export default function Model({ phoneData }) {
           Brands
         </title>
       </Head>
+      {/* {<Popup message="Order already exists" />} */}
       {checkoutModalIsOpen && <CheckoutModal />}
       <div className={styles["model__header-wrap"]}>
         <h1 className={styles["model__name"]}>
           {data?.phone.name || <Skeleton className={"skeleton-model-name"} />}
         </h1>
-        <button className={styles["model__favorite-button"]}>
+        {/* <button className={styles["model__favorite-button"]}>
           <FavoriteBorderOutlinedIcon
             className={styles["model__favorite-button-icon"]}
           />
-        </button>
+        </button> */}
       </div>
       <div className={styles["model__form-image-wrap"]}>
         <div className={styles["model__image-wrap"]}>
@@ -230,7 +225,7 @@ export default function Model({ phoneData }) {
               </p>
             </div>
           </div>
-          <form className={styles["model__form"]} onSubmit={handleSubmit}>
+          <div className={styles["model__form"]}>
             <div className={styles["model__form-fieldset"]}>
               <p className={styles["model__form-legend"]}>Choose a variation</p>
               <ul className={styles["model__form-selections-wrap"]}>
@@ -263,18 +258,22 @@ export default function Model({ phoneData }) {
               </ul>
             </div>
             <div className={styles["model__form-buttons-wrap"]}>
-              <button className={styles["model__form-button"]} type="button">
+              {/* <button className={styles["model__form-button"]} type="button">
                 Add to Cart
-              </button>
-              <button
-                className={styles["model__form-button"]}
-                type="submit"
-                // onClick={() => setCheckoutModalIsOpen(true)}
-              >
-                Buy Now
-              </button>
+              </button> */}
+              {formData.variation?.quantity == 0 ? (
+                <p className={styles["model__out-of-stock"]}>Out of Stock</p>
+              ) : (
+                <button
+                  className={styles["model__form-button"]}
+                  // type="submit"
+                  onClick={() => handleSubmit()}
+                >
+                  Buy Now
+                </button>
+              )}
             </div>
-          </form>
+          </div>
         </div>
       </div>
       <div className={styles["model__specs-wrap"]}>

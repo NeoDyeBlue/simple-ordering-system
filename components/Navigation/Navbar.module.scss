@@ -130,6 +130,7 @@
   &__menu-list-item {
     display: flex;
     align-items: center;
+    justify-content: center;
     color: v.$shade_200;
 
     &--auth-links {
@@ -144,6 +145,14 @@
     align-items: center;
     justify-content: center;
     color: v.$shade_200;
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    padding: 0.25rem;
+
+    &:hover {
+      background-color: v.$shade_60;
+    }
   }
 
   &__menu-auth-link {

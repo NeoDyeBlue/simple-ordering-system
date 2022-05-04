@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useContext } from "react";
-import useOnClickOutside from "../../../hooks/useOnClickOutside";
+import useOnClickOutside from "../../../utils/useOnClickOutside";
 import Image from "next/image";
 import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
@@ -275,7 +275,7 @@ export default function ModelModal() {
         }));
       }
     }
-  }, [filesContent]);
+  }, [filesContent, modelToEdit]);
 
   function inputChangeHandler(event) {
     const { name, value } = event.target;

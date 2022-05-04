@@ -1,13 +1,16 @@
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import Image from "next/image";
-import useOnClickOutside from "../../hooks/useOnClickOutside";
+import useOnClickOutside from "../../utils/useOnClickOutside";
 import styles from "./AdminNavbar.module.scss";
 import AdminDropMenu from "./DropMenu/AdminDropMenu";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { CSSTransition } from "react-transition-group";
 import { AdminContext } from "../../contexts/Admin.context";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { useState, useRef, useContext } from "react";
 import { useRouter } from "next/router";
+import useSWR from "swr";
 
 export default function AdminNavbar() {
   const router = useRouter();
@@ -17,6 +20,7 @@ export default function AdminNavbar() {
   const [dropMenuIsOpen, setDropMenuIsOpen] = useState(false);
   const pathName = router.pathname.split("/");
   useOnClickOutside(menuRef, () => setDropMenuIsOpen(false));
+  const { data, error } = useSWR("/api/user", { revalidateOnMount: true });
   return (
     <div className={styles["navbar"]}>
       <div className={styles["navbar__header-wrap"]}>
@@ -39,15 +43,20 @@ export default function AdminNavbar() {
           className={styles["navbar__account-button"]}
           onClick={() => setDropMenuIsOpen(!dropMenuIsOpen)}
         >
-          <p className={styles["navbar__admin-name"]}>Admin User</p>
+          <p className={styles["navbar__admin-name"]}>
+            {data?.userData?.fullname}
+          </p>
           <div className={styles["navbar__admin-image-wrap"]}>
-            {/* <Image
-              className={styles["navbar__admin-image"]}
-              src={userInfo.image.url}
-              alt="admin photo"
-              layout="fill"
-              priority={true}
-            /> */}
+            {data?.userData?.image?.url ? (
+              <Image
+                src={data.userData.image.url}
+                alt="user pic"
+                layout="fill"
+                className={styles["c-navbar__account-image"]}
+              />
+            ) : (
+              <Skeleton circle={true} width={36} height={36} />
+            )}
           </div>
         </button>
         <CSSTransition
@@ -57,7 +66,7 @@ export default function AdminNavbar() {
           classNames="menu-anim"
         >
           <div className={styles["navbar__dropmenu"]}>
-            <AdminDropMenu />
+            <AdminDropMenu onItemClick={() => setDropMenuIsOpen(false)} />
           </div>
         </CSSTransition>
       </div>

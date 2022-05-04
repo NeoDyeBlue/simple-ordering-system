@@ -3,7 +3,7 @@ import styles from "./Categories.module.scss";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ClientContext } from "../../contexts/Client.context";
+// import { ClientContext } from "../../contexts/Client.context";
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
@@ -17,32 +17,15 @@ export default function CategoryList() {
   const listRef = useRef();
   const elSelect = gsap.utils.selector(listRef);
   const timeline = useRef();
-  const [windowDimensions, setWindowDimensions] = useState({
-    width: 0,
-    height: 0,
-  });
   const { data, error } = useSWR("/api/brands");
 
   const router = useRouter();
 
   useEffect(() => {
-    function handleResize() {
-      setWindowDimensions((prev) => ({
-        ...prev,
-        width: window.innerWidth,
-        height: window.innerHeight,
-      }));
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
     const listEl = listRef.current;
-    // ScrollTrigger.config({
-    //   autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
-    // });
+    ScrollTrigger.config({
+      autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
+    });
     timeline.current = gsap
       .timeline({
         scrollTrigger: {
@@ -51,7 +34,7 @@ export default function CategoryList() {
           // markers: true, //for testing the trigger
           // endTrigger: listEl,
           end: `${60 + listEl.clientHeight}px 59px`,
-          scroller: "#__next",
+          // scroller: "#__next",
           // toggleActions: "play none none reverse",
           scrub: true,
         },
@@ -70,7 +53,7 @@ export default function CategoryList() {
     return () => {
       timeline.current.kill();
     };
-  }, [data?.brands]);
+  }, [data?.brands, elSelect]);
 
   const categoryItems = data?.brands.map((brand) => (
     <CategoryItem key={brand._id} name={brand.name} image={brand.image.url} />

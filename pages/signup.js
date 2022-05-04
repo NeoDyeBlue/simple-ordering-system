@@ -6,6 +6,7 @@ import { mutate } from "swr";
 import Link from "next/link";
 import Head from "next/head";
 import { useState } from "react";
+import PropagateLoader from "react-spinners/PropagateLoader";
 
 const initialInputErrors = {
   emailInUse: false,
@@ -24,6 +25,7 @@ export default function SignUp() {
     confirmPassword: "",
   });
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const [inputErrors, setInputErrors] = useState(initialInputErrors);
 
   function handleInputChange(event) {
@@ -40,7 +42,7 @@ export default function SignUp() {
 
     if (inputValues.password == inputValues.confirmPassword) {
       const { confirmPassword, ...formBody } = inputValues;
-
+      setIsLoading(true);
       fetch("/api/auth/signup", {
         body: JSON.stringify(formBody),
         headers: { "Content-Type": "application/json" },
@@ -52,6 +54,7 @@ export default function SignUp() {
             mutate("/api/user");
             router.push("/");
           } else {
+            setIsLoading(false);
             if (data.existing.email) {
               setInputErrors((prev) => ({
                 ...prev,
@@ -233,7 +236,11 @@ export default function SignUp() {
                   <a className={styles["form__link"]}>Login Here</a>
                 </Link>
               </p>
-              <button className={styles["form__button"]}>Sign Up</button>
+              {isLoading ? (
+                <PropagateLoader color="#0082ff" loading={true} size={16} />
+              ) : (
+                <button className={styles["form__button"]}>Sign Up</button>
+              )}
             </div>
           </form>
           <div className={styles["welcome"]}>

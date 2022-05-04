@@ -4,7 +4,8 @@
 .c-category-list-wrapper {
   position: fixed;
   top: 60px;
-  width: calc(100% - clamp(8px, 3vw, 16px));
+  width: 100%;
+  // width: calc(100% - clamp(8px, 3vw, 16px));
   z-index: 99;
   // margin-bottom: calc((2.5rem + 48px + 10px) * -1);
 }

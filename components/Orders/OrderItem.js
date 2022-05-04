@@ -39,9 +39,14 @@ export default function OrderItem(props) {
             </p>
           </div>
         </div>
-        <p className={styles["order-item__price"]}>
-          ₱{orderVariation.price.toLocaleString()}
-        </p>
+        <div className={styles["order-item__status-price-wrap"]}>
+          <p className={styles["order-item__price"]}>
+            ₱{orderVariation.price.toLocaleString()}
+          </p>
+          <p className={styles["order-item__status"]}>
+            {props.status == "approved" ? "to receive" : props.status}
+          </p>
+        </div>
       </div>
     </li>
   );

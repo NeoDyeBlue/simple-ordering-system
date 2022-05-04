@@ -118,6 +118,7 @@
   &__link-text {
     text-align: center;
     color: v.$shade_20;
+    margin-bottom: 1.5rem;
   }
 
   &__link {
@@ -132,7 +133,6 @@
     color: v.$shade_20;
     padding: 0.75em 1.5em;
     text-transform: capitalize;
-    margin-top: 1.5rem;
     width: 100%;
     cursor: pointer;
   }

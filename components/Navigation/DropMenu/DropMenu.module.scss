@@ -92,6 +92,10 @@
     gap: 0.5rem;
     width: 200px;
     // width: 100%;
+
+    &--dark {
+      border-top: 1px solid v.$shade_160;
+    }
   }
 
   &__button-link {

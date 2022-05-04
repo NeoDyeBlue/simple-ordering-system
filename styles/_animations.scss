@@ -1,8 +1,30 @@
+@use "./variables" as v;
+
 @keyframes fade-in {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-color {
+  from {
+    background-color: rgba($color: v.$shade_200, $alpha: 0);
+  }
+
+  to {
+    background-color: rgba($color: v.$shade_200, $alpha: 0.25);
   }
 }

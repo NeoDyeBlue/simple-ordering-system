@@ -1,5 +1,6 @@
 @use "../../../styles/mixins";
 @use "../../../styles/variables" as v;
+@use "../../../styles/animations";
 
 .modal {
   position: fixed;
@@ -13,12 +14,14 @@
   justify-content: center;
   padding-top: v.$fluid_padding;
   z-index: 999;
+  animation: fade-in-color 300ms ease;
 
   &__border-wrap {
     border-radius: v.$border_radius v.$border_radius 0 0;
     overflow: hidden;
     width: 100%;
     max-width: 700px;
+    animation: slide-up 300ms ease;
   }
 
   &__wrap {
@@ -138,5 +141,20 @@
     padding: 0.75em 1.5em;
     text-transform: capitalize;
     cursor: pointer;
+  }
+
+  :global(.menu-anim-enter) {
+    opacity: 0;
+  }
+  :global(.menu-anim-enter-active) {
+    opacity: 1;
+    transition: opacity 200ms;
+  }
+  :global(.menu-anim-exit) {
+    opacity: 1;
+  }
+  :global(.menu-anim-exit-active) {
+    opacity: 0;
+    transition: opacity 200ms;
   }
 }

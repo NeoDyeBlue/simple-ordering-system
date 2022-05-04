@@ -1,0 +1,90 @@
+@use "./mixins";
+@use "./variables" as v;
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: auto 1fr;
+  gap: 1rem;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  max-height: 100%;
+  //   max-width: 900px;
+  //   margin: 0 auto;
+
+  &__header-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    grid-column: 1 / -1;
+    border: 1px solid v.$shade_100;
+    border-radius: v.$border_radius;
+    padding: v.$fluid_padding;
+
+    @include mixins.tablet() {
+      grid-column: 1 / 2;
+      grid-row: 1 / -1;
+    }
+  }
+
+  &__welcome {
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-size: clamp(1rem, 6vw, 1.25rem);
+  }
+
+  &__admin-name {
+    font-family: v.$header_font;
+    font-size: 2rem;
+    font-weight: 300;
+    font-size: clamp(2rem, 6vw, 2.5rem);
+  }
+
+  &__basic-overview-wrap {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: v.$fluid-margin;
+    grid-template-columns: 1fr 1fr;
+    @include mixins.tablet() {
+      grid-column: 2 / -1;
+      grid-row: 1 / -1;
+    }
+  }
+
+  &__overview {
+    background-color: v.$shade_60;
+    padding: 1rem;
+    border-radius: v.$border_radius;
+    position: relative;
+    overflow: hidden;
+
+    &-icon {
+      color: v.$shade-100;
+      width: clamp(120px, 6vw, 150px);
+      height: clamp(120px, 6vw, 150px);
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+
+    &-count {
+      font-family: v.$header_font;
+      font-weight: 700;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: v.$shade_200;
+      word-break: break-all;
+      width: 100%;
+    }
+
+    &-name {
+      //   font-size: 1.25rem;
+      text-transform: uppercase;
+      //   font-weight: 300;
+      color: v.$shade_140;
+    }
+  }
+}

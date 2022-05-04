@@ -248,6 +248,15 @@
     }
   }
 
+  &__out-of-stock {
+    padding: 1em 0.75em;
+    font-weight: 700;
+    color: v.$shade_180;
+    text-transform: capitalize;
+    width: 100%;
+    text-align: center;
+  }
+
   &__price {
     font-size: 2.5rem;
     font-weight: 700;

@@ -6,10 +6,10 @@ import OrderItem from "../components/Orders/OrderItem";
 
 export default function Orders() {
   const { data, error } = useSWR("/api/orders", { revalidateOnMount: true });
-  console.log(data);
   const orderItems = data?.orders.map((order) => (
     <OrderItem
       key={order._id}
+      status={order.status}
       phone={order.phone}
       variation={order.variation}
       color={order.color}

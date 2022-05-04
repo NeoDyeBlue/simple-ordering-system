@@ -47,7 +47,7 @@ export default function Brands() {
             </div>
           </Td>
           <Td className={styles["table__td"]}>{data.name}</Td>
-          <Td className={styles["table__td"]}>
+          <Td className={`${styles["table__td"]} ${styles["table__td--150"]}`}>
             <div className={styles["table__buttons-wrap"]}>
               <button
                 className={styles["table__button"]}

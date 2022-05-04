@@ -1,13 +1,13 @@
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import { useState, useEffect, useRef, useContext } from "react";
-import useOnClickOutside from "../../hooks/useOnClickOutside";
-import { ClientContext } from "../../contexts/Client.context";
-import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
+import { useState, useRef } from "react";
+import useOnClickOutside from "../../utils/useOnClickOutside";
+// import { ClientContext } from "../../contexts/Client.context";
+// import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 // import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import { CSSTransition } from "react-transition-group";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Link from "next/link";
@@ -98,23 +98,14 @@ export default function Navbar() {
               <li className={styles["c-navbar__menu-list-item"]}>
                 <Link href="/">
                   <a className={styles["c-navbar__menu-link"]}>
-                    <FavoriteOutlinedIcon
+                    <HomeOutlinedIcon
                       className={styles["c-navbar__menu-link-icon"]}
                     />
                   </a>
                 </Link>
               </li>
               <li className={styles["c-navbar__menu-list-item"]}>
-                <Link href="/">
-                  <a className={styles["c-navbar__menu-link"]}>
-                    <ShoppingCartOutlinedIcon
-                      className={styles["c-navbar__menu-link-icon"]}
-                    />
-                  </a>
-                </Link>
-              </li>
-              <li className={styles["c-navbar__menu-list-item"]}>
-                <Link href="/">
+                <Link href="/orders">
                   <a className={styles["c-navbar__menu-link"]}>
                     <ShoppingBagOutlinedIcon
                       className={styles["c-navbar__menu-link-icon"]}
@@ -184,7 +175,10 @@ export default function Navbar() {
             classNames="menu-anim"
           >
             <div className={styles["c-navbar__dropmenu"]}>
-              <ClientDropMenu authData={data} />
+              <ClientDropMenu
+                authData={data}
+                onItemClick={() => setDropMenuIsOpen(false)}
+              />
             </div>
           </CSSTransition>
         </div>

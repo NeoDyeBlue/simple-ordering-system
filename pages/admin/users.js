@@ -11,8 +11,8 @@ import useSWR from "swr";
 export default function Users() {
   const { data, error } = useSWR("/api/admin/users", {
     revalidateOnMount: true,
+    refreshInterval: 3000,
   });
-  console.log(data);
 
   function createTableRows() {
     if (data) {

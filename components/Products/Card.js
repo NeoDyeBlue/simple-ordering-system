@@ -18,9 +18,14 @@ export default function Card(props) {
   return (
     <Link href={props.link}>
       <a className={styles["c-card"]}>
-        {totalQuantity <= 10 && (
+        {totalQuantity <= 10 && totalQuantity != 0 && (
           <div className={styles["c-card__tag"]}>
-            <p className={styles["c-card__quantity"]}>{totalQuantity}</p>
+            <p className={styles["c-card__quantity"]}>{totalQuantity} left</p>
+          </div>
+        )}
+        {totalQuantity == 0 && (
+          <div className={styles["c-card__tag"]}>
+            <p className={styles["c-card__quantity"]}>Sold Out</p>
           </div>
         )}
         <div className={styles["c-card__image-wrap"]}>

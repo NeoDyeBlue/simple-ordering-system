@@ -6,7 +6,7 @@ import ModelDeleteModal from "../Modals/Admin/ModelDeleteModal";
 import ModelModal from "../Modals/Admin/ModelModal";
 import styles from "./AdminNavLayout.module.scss";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import useOnClickOutside from "../../hooks/useOnClickOutside";
+import useOnClickOutside from "../../utils/useOnClickOutside";
 import { useRef, useContext } from "react";
 import { AdminContext } from "../../contexts/Admin.context";
 

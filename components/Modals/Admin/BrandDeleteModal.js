@@ -1,5 +1,5 @@
 import { useRef, useContext } from "react";
-import useOnClickOutside from "../../../hooks/useOnClickOutside";
+import useOnClickOutside from "../../../utils/useOnClickOutside";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { AdminContext } from "../../../contexts/Admin.context";
 import styles from "./AdminModal.module.scss";
@@ -20,6 +20,7 @@ export default function BrandDeleteModal() {
       .then((data) => {
         if (data.deleted) {
           mutate("/api/admin/brands");
+          mutate("/api/admin/models");
           setBrandDeleteModalIsOpen(false);
         }
       })

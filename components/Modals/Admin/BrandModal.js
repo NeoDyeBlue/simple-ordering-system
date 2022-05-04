@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useContext } from "react";
-import useOnClickOutside from "../../../hooks/useOnClickOutside";
+import useOnClickOutside from "../../../utils/useOnClickOutside";
 import Image from "next/image";
 import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import ErrorOutlinedIcon from "@mui/icons-material/ErrorOutlined";
@@ -59,7 +59,7 @@ export default function BrandModal() {
       }
       // setSaveDisabled(false);
     }
-  }, [filesContent]);
+  }, [filesContent, brandToEdit]);
 
   function inputChangeHandler(event) {
     const { name, value } = event.target;

@@ -57,15 +57,30 @@
   }
 
   &__admin-image-wrap {
+    width: 32px;
+    height: 32px;
     position: relative;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: gray;
+    border-radius: 50%;
+    overflow: hidden;
   }
+
+  &__account-image {
+    object-fit: cover;
+  }
+
+  // &__admin-image-wrap {
+  //   position: relative;
+  //   border-radius: 50%;
+  //   width: 36px;
+  //   height: 36px;
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: center;
+  //   background-color: gray;
+  // }
 
   &__dropmenu {
     position: absolute;

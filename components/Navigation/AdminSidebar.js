@@ -4,7 +4,6 @@ import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import SmartphoneOutlinedIcon from "@mui/icons-material/SmartphoneOutlined";
 import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
-import FeaturedVideoOutlinedIcon from "@mui/icons-material/FeaturedVideoOutlined";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import ArrowDropUpOutlinedIcon from "@mui/icons-material/ArrowDropUpOutlined";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -166,24 +165,6 @@ export default function AdminSidebar() {
               </Link>
             </li>
           </ul>
-        </li>
-        <li
-          className={`${styles["sidebar__item"]} ${
-            router.pathname == "/admin/featured" && !dropdown.active
-              ? styles["sidebar__item--active"]
-              : ""
-          }`}
-        >
-          <Link href={"/admin/featured"}>
-            <a
-              className={styles["sidebar__link"]}
-              onClick={handleItemClick}
-              name="featured"
-            >
-              <FeaturedVideoOutlinedIcon className={styles["sidebar__icon"]} />
-              <p className={styles["sidebar__text"]}>Featured</p>
-            </a>
-          </Link>
         </li>
         <li
           className={`${styles["sidebar__item"]} ${

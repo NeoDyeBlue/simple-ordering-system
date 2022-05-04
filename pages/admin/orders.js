@@ -4,12 +4,44 @@ import Image from "next/image";
 import styles from "../../styles/admin/Tables.module.scss";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
+import { toast } from "react-toastify";
 
 export default function Orders() {
   const { data, error } = useSWR("/api/admin/orders", {
     revalidateOnMount: true,
+    refreshInterval: 3000,
   });
+
+  function approveOrder(order, phone, variation) {
+    fetch(`/api/admin/orders`, {
+      method: "POST",
+      body: JSON.stringify({
+        orderId: order,
+        phoneId: phone,
+        variationId: variation,
+      }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          mutate("/api/admin/models");
+          mutate("/api/admin/orders");
+        } else {
+          toast.error(`Approve failed! ${data.message}`, {
+            position: "bottom-right",
+            autoClose: 5000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+        }
+      })
+      .catch((err) => console.log(err));
+  }
 
   function createTableRows() {
     if (data) {
@@ -80,7 +112,20 @@ export default function Orders() {
             </Td>
             <Td
               className={`${styles["table__td"]} ${styles["table__td--min-150"]}`}
-            ></Td>
+            >
+              {data.status == "pending" ? (
+                <button
+                  onClick={() =>
+                    approveOrder(data._id, data.phone._id, orderVariation._id)
+                  }
+                  className={`${styles["table__button"]} ${styles["table__button--auto"]}`}
+                >
+                  Approve
+                </button>
+              ) : (
+                <p className={styles["table__action-status"]}>Approved</p>
+              )}
+            </Td>
           </Tr>
         );
       });

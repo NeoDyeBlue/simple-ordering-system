@@ -1,18 +1,11 @@
 import { NextResponse } from "next/server";
-// import { await jwt.verify } from "jsonwebtoken";
-// import { jwt.verify } from "@tsndr/cloudflare-worker-jwt";
 const jwt = require("@tsndr/cloudflare-worker-jwt");
 
 export default async function middleware(req) {
   const { cookies } = req;
   const token = cookies.sessionToken;
   const url = req.page.name;
-  const { pathname, origin } = req.nextUrl;
-  // console.log(url);
-
-  // if (url.split("/")[1] !== "api") {
-  // }
-
+  const { origin } = req.nextUrl;
   if (url == "/login" || url == "/signup") {
     if (token) {
       if (await jwt.verify(token, process.env.JWT_SECRET)) {
@@ -24,7 +17,9 @@ export default async function middleware(req) {
         }
       }
     }
-  } else if (url == "/account" || url == "/orders") {
+  }
+
+  if (url == "/account" || url == "/orders") {
     if (token) {
       if (await jwt.verify(token, process.env.JWT_SECRET)) {
         const { role } = jwt.decode(token);
@@ -37,7 +32,9 @@ export default async function middleware(req) {
     } else {
       return NextResponse.redirect(`${origin}/login`);
     }
-  } else if (
+  }
+
+  if (
     url == "/search" ||
     url == "/[brand]" ||
     url == "/[brand]/[model]" ||
@@ -53,7 +50,9 @@ export default async function middleware(req) {
     } else {
       return NextResponse.next();
     }
-  } else if (url.split("/")[1] == "admin") {
+  }
+
+  if (url.split("/")[1] == "admin") {
     if (token) {
       if (await jwt.verify(token, process.env.JWT_SECRET)) {
         const { role } = jwt.decode(token);
@@ -66,7 +65,9 @@ export default async function middleware(req) {
     } else {
       return NextResponse.redirect(`${origin}/login`);
     }
-  } else if (url == "/api/orders") {
+  }
+
+  if (url == "/api/orders") {
     if (token) {
       if (await jwt.verify(token, process.env.JWT_SECRET)) {
         const { role } = jwt.decode(token);
@@ -80,7 +81,9 @@ export default async function middleware(req) {
         { status: 401, headers: { "Content-Type": "application/json" } }
       );
     }
-  } else if (
+  }
+
+  if (
     url == "/api/admin/orders" ||
     url == "/api/admin/brands" ||
     url == "/api/admin/brands" ||

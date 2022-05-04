@@ -27,8 +27,6 @@ export default function Users() {
                 src={data.image.url}
                 alt="User image"
                 layout="fill"
-                // width={64}
-                // height={64}
                 priority={true}
               />
             </div>

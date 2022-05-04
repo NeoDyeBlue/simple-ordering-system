@@ -17,8 +17,6 @@ export default function Brands() {
     setBrandDeleteModalIsOpen,
     setBrandToEdit,
     setBrandToDelete,
-    // setBrandTableData,
-    // brandTableData,
   } = useContext(AdminContext);
   const { data, error } = useSWR("/api/admin/brands", {
     revalidateOnMount: true,

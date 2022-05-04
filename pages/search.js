@@ -1,7 +1,6 @@
 import Head from "next/head";
 import styles from "../styles/Catalog.module.scss";
 import ClientLayout from "../components/Layouts/ClientLayout";
-// import CategoriesLayout from "../components/Layouts/CategoriesLayout";
 import Card from "../components/Products/Card";
 import { useRouter } from "next/dist/client/router";
 import Skeleton from "react-loading-skeleton";
@@ -24,22 +23,12 @@ export default function Search({ initData }) {
   const router = useRouter();
   const { q } = router.query;
   const searchQuery = q?.length ? q.split(" ").join("+") : "";
-  //   const { data: phonesData, error } = useSWR(
-  //     `/api/phones/search?q=${searchQuery}`,
-  //     {
-  //       revalidateOnMount: true,
-  //       initialData: initData?.phones.length ? initData : null,
-  //     }
-  //   );
   const { phonesData, endReached, isLoading, size, setSize, error, mutate } =
     usePhonesSearchPaginate(`/api/phones/search?q=${searchQuery}`, 8, {
       initialData: initData.length ? initData : null,
     });
 
-  //   console.log(phonesData);
-
   const productCards = phonesData?.map((phone) => {
-    // console.log(phone);
     return (
       <Card
         key={phone._id}

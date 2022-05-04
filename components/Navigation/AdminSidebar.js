@@ -8,7 +8,7 @@ import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined
 import ArrowDropUpOutlinedIcon from "@mui/icons-material/ArrowDropUpOutlined";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { AdminContext } from "../../contexts/Admin.context";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 

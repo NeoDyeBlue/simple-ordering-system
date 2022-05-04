@@ -3,8 +3,7 @@ import styles from "./Categories.module.scss";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import Link from "next/link";
 import { useRouter } from "next/router";
-// import { ClientContext } from "../../contexts/Client.context";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef} from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
@@ -13,7 +12,6 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 export default function CategoryList() {
-  // const { phoneCategories } = useContext(ClientContext);
   const listRef = useRef();
   const elSelect = gsap.utils.selector(listRef);
   const timeline = useRef();
@@ -31,15 +29,10 @@ export default function CategoryList() {
         scrollTrigger: {
           trigger: "#__next",
           start: "61px 61px",
-          // markers: true, //for testing the trigger
-          // endTrigger: listEl,
           end: `${60 + listEl.clientHeight}px 59px`,
-          // scroller: "#__next",
-          // toggleActions: "play none none reverse",
           scrub: true,
         },
       })
-      // .to(listRef.current, { position: "sticky" }, 0)
       .to(
         elSelect(".c-category__image-icon-wrap"),
         {

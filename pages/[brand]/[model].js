@@ -1,6 +1,4 @@
 import styles from "../../styles/Model.module.scss";
-// import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-// import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import SmartphoneOutlinedIcon from "@mui/icons-material/SmartphoneOutlined";
 import BatteryFullOutlinedIcon from "@mui/icons-material/BatteryFullOutlined";
 import CameraOutlinedIcon from "@mui/icons-material/CameraOutlined";
@@ -67,7 +65,6 @@ export default function Model({ phoneData }) {
         type="radio"
         name="variation"
         id={variation._id}
-        // value={variation._id}
         required
         checked={variation._id == formData.variation._id}
         onChange={(e) => {
@@ -155,17 +152,11 @@ export default function Model({ phoneData }) {
           Brands
         </title>
       </Head>
-      {/* {<Popup message="Order already exists" />} */}
       {checkoutModalIsOpen && <CheckoutModal />}
       <div className={styles["model__header-wrap"]}>
         <h1 className={styles["model__name"]}>
           {data?.phone.name || <Skeleton className={"skeleton-model-name"} />}
         </h1>
-        {/* <button className={styles["model__favorite-button"]}>
-          <FavoriteBorderOutlinedIcon
-            className={styles["model__favorite-button-icon"]}
-          />
-        </button> */}
       </div>
       <div className={styles["model__form-image-wrap"]}>
         <div className={styles["model__image-wrap"]}>
@@ -236,7 +227,6 @@ export default function Model({ phoneData }) {
                       width={150}
                       height={58}
                       className={styles["skeleton-radio-rect"]}
-                      // containerClassName={styles["model__form-selections-wrap"]}
                     />
                   ))}
               </ul>
@@ -258,15 +248,11 @@ export default function Model({ phoneData }) {
               </ul>
             </div>
             <div className={styles["model__form-buttons-wrap"]}>
-              {/* <button className={styles["model__form-button"]} type="button">
-                Add to Cart
-              </button> */}
               {formData.variation?.quantity == 0 ? (
                 <p className={styles["model__out-of-stock"]}>Out of Stock</p>
               ) : (
                 <button
                   className={styles["model__form-button"]}
-                  // type="submit"
                   onClick={() => handleSubmit()}
                 >
                   Buy Now

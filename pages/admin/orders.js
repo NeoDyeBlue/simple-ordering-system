@@ -1,6 +1,5 @@
 import AdminLayout from "../../components/Layouts/AdminLayout";
 import Head from "next/head";
-import Image from "next/image";
 import styles from "../../styles/admin/Tables.module.scss";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";

@@ -5,7 +5,6 @@ import SmartphoneOutlinedIcon from "@mui/icons-material/SmartphoneOutlined";
 import PeopleAltOutlinedIcon from "@mui/icons-material/PeopleAltOutlined";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import Head from "next/head";
-// import Image from "next/image";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import useSWR from "swr";

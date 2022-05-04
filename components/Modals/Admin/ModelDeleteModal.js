@@ -6,12 +6,7 @@ import styles from "./AdminModal.module.scss";
 import { mutate } from "swr";
 
 export default function ModelDeleteModal() {
-  const {
-    modelToDelete,
-    modelTableData,
-    setModelTableData,
-    setModelDeleteModalIsOpen,
-  } = useContext(AdminContext);
+  const { modelToDelete, setModelDeleteModalIsOpen } = useContext(AdminContext);
   const modalRef = useRef(null);
 
   useOnClickOutside(modalRef, () => setModelDeleteModalIsOpen(false));

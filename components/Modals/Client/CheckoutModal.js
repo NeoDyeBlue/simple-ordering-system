@@ -1,4 +1,3 @@
-// import Modal from "react-modal";
 import styles from "./CheckoutModal.module.scss";
 import { useContext, useEffect } from "react";
 import { ClientContext } from "../../../contexts/Client.context";
@@ -9,14 +8,12 @@ import CheckoutItem from "./CheckoutItem";
 import { useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { CSSTransition } from "react-transition-group";
-// import useOnClickOutside from "../../../utils/useOnClickOutside";
 import { toast } from "react-toastify";
 
 export default function CheckoutModal() {
   const { setCheckoutModalIsOpen, checkoutModalIsOpen, checkoutItems } =
     useContext(ClientContext);
   const modalRef = useRef(null);
-  // useOnClickOutside(modalRef, () => setCheckoutModalIsOpen(false));
   const router = useRouter();
   const [totalPrice, setTotalPrice] = useState(0);
 

@@ -37,7 +37,6 @@ const initialFormData = {
 export default function ModelModal() {
   const { modelToEdit, setModelModalIsOpen } = useContext(AdminContext);
   const modalRef = useRef(null);
-  // const [brandNames, setBrandNames] = useState([]);
   const [nameError, setNameError] = useState(initialNameErrorState);
   const [formData, setFormData] = useState(initialFormData);
 
@@ -221,15 +220,6 @@ export default function ModelModal() {
   });
 
   const { data: brandNames, error } = useSWR("/api/admin/brands");
-
-  // useEffect(() => {
-  //   fetch("/api/admin/phones/brand")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setBrandNames(data.brands);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, [brandNames]);
 
   useEffect(() => {
     if (modelToEdit) {

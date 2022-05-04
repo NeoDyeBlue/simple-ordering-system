@@ -3,9 +3,6 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { useState, useRef } from "react";
 import useOnClickOutside from "../../utils/useOnClickOutside";
-// import { ClientContext } from "../../contexts/Client.context";
-// import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
-// import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import { CSSTransition } from "react-transition-group";
@@ -20,7 +17,6 @@ import "react-loading-skeleton/dist/skeleton.css";
 import useSWR from "swr";
 
 export default function Navbar() {
-  // const { setDropMenuIsOpen, dropMenuIsOpen } = useContext(ClientContext);
   const [dropMenuIsOpen, setDropMenuIsOpen] = useState(false);
   const [inputData, setInputData] = useState("");
   const [searchBoxVisible, setSearchBoxVisible] = useState(false);

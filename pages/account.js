@@ -8,7 +8,6 @@ import CheckOutlinedIcon from "@mui/icons-material/CheckOutlined";
 import { mutate } from "swr";
 import Image from "next/image";
 import Head from "next/head";
-import { css } from "@emotion/react";
 import BounceLoader from "react-spinners/BounceLoader";
 import useSWR from "swr";
 
@@ -18,12 +17,6 @@ const initialInputErrors = {
   passwordIncorrect: false,
   passwordsNotMatch: false,
 };
-
-const override = css`
-  display: block;
-  margin: 0 auto;
-  border-color: red;
-`;
 
 export default function Account() {
   const [openFileSelector, { filesContent, errors }] = useFilePicker({

@@ -14,8 +14,6 @@ const initialNameErrorState = false;
 export default function BrandModal() {
   const {
     brandToEdit,
-    brandTableData,
-    setBrandTableData,
     setBrandModalIsOpen,
   } = useContext(AdminContext);
   const modalRef = useRef(null);
@@ -57,7 +55,6 @@ export default function BrandModal() {
           image: { ...prev.image, url: filesContent[0].content },
         }));
       }
-      // setSaveDisabled(false);
     }
   }, [filesContent, brandToEdit]);
 
@@ -101,16 +98,6 @@ export default function BrandModal() {
         .then((data) => {
           if (data.success) {
             mutate("/api/admin/brands");
-            // setBrandTableData([
-            //   ...(!brandTableData.some((item) => {
-            //     if (item._id == data.brand._id) return true;
-            //   })
-            //     ? data.brand
-            //     : []),
-            //   ...brandTableData.map((item) =>
-            //     item._id == data.brand._id ? data.brand : item
-            //   ),
-            // ]);
             setBrandModalIsOpen(false);
           } else {
             setNameError(data.exists);
@@ -126,7 +113,6 @@ export default function BrandModal() {
         .then((res) => res.json())
         .then((data) => {
           if (data.success) {
-            // setBrandTableData([data.brand, ...brandTableData]);
             mutate("/api/admin/brands");
             setBrandModalIsOpen(false);
           } else {

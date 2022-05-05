@@ -24,7 +24,7 @@ export default async function middleware(req) {
       if (await jwt.verify(token, process.env.JWT_SECRET)) {
         const { role } = jwt.decode(token);
         if (role == "admin") {
-          return NextResponse.redirect(`${origin}/admin`);
+          return NextResponse.redirect(`${origin}/admin/orders`);
         } else {
           return NextResponse.next();
         }

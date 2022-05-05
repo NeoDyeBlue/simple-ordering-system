@@ -83,6 +83,22 @@ export default async function middleware(req) {
     }
   }
 
+  if (url == "/api/user") {
+    if (token) {
+      if (await jwt.verify(token, process.env.JWT_SECRET)) {
+        return NextResponse.next();
+      } else {
+        return new Response(
+          JSON.stringify({
+            authenticated: false,
+            message: "Not authenticated",
+          }),
+          { status: 401, headers: { "Content-Type": "application/json" } }
+        );
+      }
+    }
+  }
+
   if (
     url == "/api/admin/orders" ||
     url == "/api/admin/brands" ||
